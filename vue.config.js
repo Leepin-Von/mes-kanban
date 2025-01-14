@@ -1,4 +1,5 @@
 const { defineConfig } = require("@vue/cli-service");
+const packageJson = require("./package.json");
 
 module.exports = defineConfig({
   transpileDependencies: true,
@@ -15,6 +16,7 @@ module.exports = defineConfig({
   chainWebpack: (config) => {
     config.plugin("html").tap((args) => {
       args[0].title = "MES看板查询平台";
+      args[0].version = packageJson.version;
       return args;
     });
   },
