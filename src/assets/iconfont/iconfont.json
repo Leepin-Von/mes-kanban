@@ -1,16 +1,93 @@
 {
-  "id": "4806515",
+  "id": "4807804",
   "name": "mes-kanban",
   "font_family": "iconfont",
   "css_prefix_text": "icon-",
   "description": "",
   "glyphs": [
     {
-      "icon_id": "586792",
-      "name": "chart-index",
-      "font_class": "chartindex",
-      "unicode": "e6ca",
-      "unicode_decimal": 59082
+      "icon_id": "16169308",
+      "name": "计算器",
+      "font_class": "calculator",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    },
+    {
+      "icon_id": "9511926",
+      "name": "退出登录",
+      "font_class": "signOut",
+      "unicode": "e68e",
+      "unicode_decimal": 59022
+    },
+    {
+      "icon_id": "34816285",
+      "name": "登录",
+      "font_class": "signIn",
+      "unicode": "e60e",
+      "unicode_decimal": 58894
+    },
+    {
+      "icon_id": "14015818",
+      "name": "看板",
+      "font_class": "kanban",
+      "unicode": "e640",
+      "unicode_decimal": 58944
+    },
+    {
+      "icon_id": "12044049",
+      "name": "设置",
+      "font_class": "settings",
+      "unicode": "e601",
+      "unicode_decimal": 58881
+    },
+    {
+      "icon_id": "12044064",
+      "name": "查询",
+      "font_class": "search",
+      "unicode": "e605",
+      "unicode_decimal": 58885
+    },
+    {
+      "icon_id": "12044066",
+      "name": "用户",
+      "font_class": "user",
+      "unicode": "e606",
+      "unicode_decimal": 58886
+    },
+    {
+      "icon_id": "12044074",
+      "name": "上锁",
+      "font_class": "lock",
+      "unicode": "e607",
+      "unicode_decimal": 58887
+    },
+    {
+      "icon_id": "12044081",
+      "name": "菜单",
+      "font_class": "menu",
+      "unicode": "e609",
+      "unicode_decimal": 58889
+    },
+    {
+      "icon_id": "12044084",
+      "name": "错误",
+      "font_class": "no",
+      "unicode": "e608",
+      "unicode_decimal": 58888
+    },
+    {
+      "icon_id": "12044085",
+      "name": "正确",
+      "font_class": "yes",
+      "unicode": "e60a",
+      "unicode_decimal": 58890
+    },
+    {
+      "icon_id": "12044092",
+      "name": "垃圾桶",
+      "font_class": "delete",
+      "unicode": "e60d",
+      "unicode_decimal": 58893
     }
   ]
 }

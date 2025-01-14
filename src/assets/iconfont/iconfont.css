@@ -1,8 +1,8 @@
 @font-face {
-  font-family: "iconfont"; /* Project id 4806515 */
-  src: url('iconfont.woff2?t=1736347124269') format('woff2'),
-       url('iconfont.woff?t=1736347124269') format('woff'),
-       url('iconfont.ttf?t=1736347124269') format('truetype');
+  font-family: "iconfont"; /* Project id 4807804 */
+  src: url('iconfont.woff2?t=1736832651736') format('woff2'),
+       url('iconfont.woff?t=1736832651736') format('woff'),
+       url('iconfont.ttf?t=1736832651736') format('truetype');
 }
 
 .iconfont {
@@ -13,7 +13,51 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-chartindex:before {
-  content: "\e6ca";
+.icon-calculator:before {
+  content: "\e600";
+}
+
+.icon-signOut:before {
+  content: "\e68e";
+}
+
+.icon-signIn:before {
+  content: "\e60e";
+}
+
+.icon-kanban:before {
+  content: "\e640";
+}
+
+.icon-settings:before {
+  content: "\e601";
+}
+
+.icon-search:before {
+  content: "\e605";
+}
+
+.icon-user:before {
+  content: "\e606";
+}
+
+.icon-lock:before {
+  content: "\e607";
+}
+
+.icon-menu:before {
+  content: "\e609";
+}
+
+.icon-no:before {
+  content: "\e608";
+}
+
+.icon-yes:before {
+  content: "\e60a";
+}
+
+.icon-delete:before {
+  content: "\e60d";
 }
 
