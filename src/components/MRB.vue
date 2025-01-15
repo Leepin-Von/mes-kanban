@@ -171,7 +171,7 @@ export default {
     getSuperOrgList() {
       const _this = this;
       _this.postData.docType = "PassSuperOrgList";
-      post("/transfer", _this.postData)
+      post("/forward", _this.postData)
         .then((res) => {
           if (res.state === "OK") {
             this.superOrgList = res.data;
@@ -198,7 +198,7 @@ export default {
       _this.postData.parameters = {
         SuperOrgId: _this.form.SuperOrg,
       };
-      post("/transfer", _this.postData)
+      post("/forward", _this.postData)
         .then((res) => {
           if (res.state === "OK") {
             this.orgList = res.data;
@@ -223,7 +223,7 @@ export default {
     getProdClass() {
       const _this = this;
       _this.postData.docType = "ProdClass";
-      post("/transfer", _this.postData)
+      post("/forward", _this.postData)
         .then((res) => {
           if (res.state === "OK") {
             this.prodClassOptions = res.data;
@@ -257,7 +257,7 @@ export default {
         Weighted: _this.form.Weighted,
         IdStr: "",
       };
-      post("/transfer", _this.postData)
+      post("/forward", _this.postData)
         .then((res) => {
           if (res.state === "OK") {
             this.$message({
