@@ -29,6 +29,9 @@ export default {
     MRB
   },
   methods: {
+    /**
+     * 退出登录
+     */
     handleAvatarClick() {
       this.$router.push('/signIn')
       localStorage.removeItem('Authorization')

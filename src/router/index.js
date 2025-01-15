@@ -7,7 +7,7 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/",
-    redirect: "/signIn",
+    redirect: "/signIn", // 重定向
   },
   {
     path: "/signIn",
@@ -27,6 +27,7 @@ const router = new VueRouter({
   routes,
 });
 
+// 路由守卫
 router.beforeEach((to, from, next) => {
   const token = localStorage.getItem("Authorization");
   const publicPages = ["/signIn"];

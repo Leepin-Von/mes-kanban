@@ -19,3 +19,25 @@
     </el-col>
 </el-row>
 ```
+- 本项目中使用的图标来自iconfont，采用symbol样式
+    - 目前已有的几个图标名分别是：
+        1. `icon-calculator`
+        2. `icon-signOut`
+        3. `icon-signIn`
+        4. `icon-kanban`
+        5. `icon-settings`
+        6. `icon-search`
+        7. `icon-user`
+        8. `icon-lock`
+        9. `icon-menu`
+        10. `icon-no`
+        11. `icon-yes`
+        12. `icon-delete`
+
+使用方式：
+```html
+<svg aria-hidden="true">
+    <!--icon-signIn为图标名称，可在`src/assets/iconfont/iconfont.js`中找到-->
+    <use xlink:href="#icon-signIn"></use>
+</svg>
+```

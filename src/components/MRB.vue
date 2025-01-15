@@ -65,21 +65,25 @@
 
 <script>
 import { post } from "@/http/api";
+
 export default {
   data() {
     return {
-      dialogFormVisible: false,
-      formLabelWidth: "85px",
+      dialogFormVisible: false, // 控制对话框的显示和隐藏
+      formLabelWidth: "85px", // 表单标签的宽度
+      /**
+       * 表单数据，post请求的参数
+       */
       form: {
-        SuperOrg: "",
-        OrgArray: [],
-        dateRange: [],
-        PartClassArray: [],
-        Weighted: "0",
+        SuperOrg: "", // 课级单位
+        OrgArray: [], // 组级单位数组
+        dateRange: [], // 日期范围
+        PartClassArray: [], // 产品类别数组
+        Weighted: "0", // 是否加权
       },
-      superOrgList: [],
-      orgList: [],
-      prodClassOptions: [],
+      superOrgList: [], // 课级单位列表
+      orgList: [], // 组级单位列表
+      prodClassOptions: [], // 产品类别选项
       pickerOptions: {
         shortcuts: [
           {
@@ -111,23 +115,33 @@ export default {
           },
         ],
       },
+      /**
+       * post请求的数据
+       */
       postData: {
-        docType: "",
-        parameters: {},
+        docType: "", // 文档类型
+        parameters: {}, // 请求参数
       },
     };
   },
   created() {
     this.getSuperOrgList();
+    // 延迟获取产品类别选项，否则会报错
     setTimeout(() => {
       this.getProdClass();
     }, 500);
   },
   methods: {
+    /**
+     * 开始计算
+     */
     startCalculation() {
       this.postFormData();
       this.closeDialog();
     },
+    /**
+     * 关闭对话框
+     */
     closeDialog() {
       this.dialogFormVisible = false;
       this.form = {
@@ -138,13 +152,22 @@ export default {
         Weighted: "0",
       };
     },
+    /**
+     * 课级单位下拉框显示/隐藏事件
+     * @param e 下拉框是否显示
+     */
     orgListVisibleChange(e) {
       if (e) {
+        // 下拉框显示
         return;
       } else {
+        // 下拉框隐藏
         this.getOrgList();
       }
     },
+    /**
+     * 获取课级单位列表
+     */
     getSuperOrgList() {
       const _this = this;
       _this.postData.docType = "PassSuperOrgList";
@@ -166,6 +189,9 @@ export default {
           });
         });
     },
+    /**
+     * 获取组级单位列表
+     */
     getOrgList() {
       const _this = this;
       _this.postData.docType = "PassOrgList";
@@ -176,7 +202,7 @@ export default {
         .then((res) => {
           if (res.state === "OK") {
             this.orgList = res.data;
-            this.form.OrgArray = this.orgList.map(item => item.ID)
+            this.form.OrgArray = this.orgList.map(item => item.ID);
           } else {
             this.$notify.error({
               title: "获取组级单位出错",
@@ -191,6 +217,9 @@ export default {
           });
         });
     },
+    /**
+     * 获取产品类别选项
+     */
     getProdClass() {
       const _this = this;
       _this.postData.docType = "ProdClass";
@@ -198,7 +227,7 @@ export default {
         .then((res) => {
           if (res.state === "OK") {
             this.prodClassOptions = res.data;
-            this.form.PartClassArray = this.prodClassOptions
+            this.form.PartClassArray = this.prodClassOptions;
           } else {
             this.$notify.error({
               title: "获取产品类别出错",
@@ -213,6 +242,9 @@ export default {
           });
         });
     },
+    /**
+     * 提交表单数据
+     */
     postFormData() {
       const _this = this;
       _this.postData.docType = "MRBGroupScrape";

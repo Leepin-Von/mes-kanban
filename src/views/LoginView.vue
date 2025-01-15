@@ -48,6 +48,9 @@ export default {
   },
   methods: {
     ...mapMutations(["changeLogin"]),
+    /**
+     * 登录
+     */
     handleLogin() {
       if (!this.loginForm.username || !this.loginForm.password) {
         this.$message.error("用户名或密码不能为空");
