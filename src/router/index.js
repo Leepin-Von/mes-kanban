@@ -26,26 +26,22 @@ const router = new VueRouter({
 // 路由守卫
 router.beforeEach((to, from, next) => {
   if (to.path === "/") {
-    next("/signIn");
+    return next("/signIn");
   }
   const token = localStorage.getItem("Authorization");
   const publicPages = ["/signIn"];
   const authRequired = !publicPages.includes(to.path);
 
   if (authRequired && (!token || isTokenExpired(token))) {
-    if (to.path !== "/signIn") {
-      next({ path: "/signIn", query: { redirect: to.fullPath } });
-    } else {
-      next();
-    }
+    return next();
   } else if (to.path === "/signIn" && token) {
     if (to.query.redirect) {
-      next(to.query.redirect); // 重定向到原始页面
+      return next(to.query.redirect); // 重定向到原始页面
     } else {
-      next({ path: "/kanban" }); // 如果已经登录
+      return next({ path: "/kanban" }); // 如果已经登录
     }
   } else {
-    next();
+    return next();
   }
 });
 

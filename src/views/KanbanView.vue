@@ -21,7 +21,7 @@
       <el-col v-for="component in components" :key="component.componentId" :span="6">
         <div class="pixel-card">
           <CommonComponent :componentId="component.componentId" :componentName="component.componentName"
-            @click="handleComponentClick(component.name)">
+            @click="handleComponentClick(component)">
             <component :ref="component.name" :is="component.name" :componentId="component.componentId"
               :componentName="component.componentName" />
           </CommonComponent>
@@ -32,6 +32,7 @@
 </template>
 
 <script>
+import { post } from '@/http/api';
 import CommonComponent from '@/components/CommonComponent.vue';
 // “小程序”导入
 import MRBGroupScrap from '@/components/MRBGroupScrap.vue'
@@ -65,9 +66,10 @@ export default {
      * 退出登录
      */
     handleAvatarClick() {
-      this.$router.push('/signIn')
       localStorage.removeItem('Authorization')
       localStorage.removeItem('Username')
+      this.$router.push('/signIn')
+      
     },
     /**
      * 查询功能代码或功能名称
@@ -90,8 +92,37 @@ export default {
         this.filteredComponents = this.components;
       }
     },
-    handleComponentClick(componentName) {
-      this.$refs[componentName][0].openDialog();
+    /**
+     * 打开“小程序”时检查是否有对应权限
+     * @param component 每个“小程序”组件
+     */
+    handleComponentClick(component) {
+      const parameters = {
+        UserId: localStorage.getItem('Username'),
+        PWD: '',
+        ItemId: component.componentId,
+      }
+      // 不知道ERP里能用的账号密码，所以无奈写了这段测试用，用户名为TEST直接进
+      if (localStorage.getItem('Username') === 'TEST') {
+        this.$refs[component.name][0].openDialog();
+        return;
+      }
+      post('/forward', parameters).then(res => {
+        if (res.state === 'OK') {
+          this.$refs[component.name][0].openDialog();
+        } else {
+          this.$notify.error({
+            title: '出错',
+            message: '打开【' + component.componentId + ' - ' + component.componentName + '】失败，无此权限'
+          })
+        }
+      }).catch(err => {
+        this.$notify.error({
+          title: '出错',
+          message: '打开【' + component.componentId + ' - ' + component.componentName + '】失败，可能的原因：' + err
+        })
+      })
+
     }
   }
 }

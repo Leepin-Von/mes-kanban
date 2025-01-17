@@ -15,7 +15,7 @@
               <span style="float: left">{{ item.Name }}</span>
               <span style="float: right; color: #8492a6; font-size: 13px">{{
                 item.ID
-              }}</span>
+                }}</span>
             </el-option>
           </el-select>
         </el-form-item>
@@ -23,7 +23,7 @@
           <el-checkbox-group v-model="form.OrgArray">
             <el-checkbox border v-for="option in orgList" :label="option.ID" :key="option.ID">{{
               option.Name
-            }}</el-checkbox>
+              }}</el-checkbox>
           </el-checkbox-group>
         </el-form-item>
         <el-form-item label="报废含加权" :label-width="formLabelWidth">
@@ -128,11 +128,12 @@ export default {
     };
   },
   created() {
-    this.getSuperOrgList();
-    // 延迟获取产品类别选项，否则会报错
+    setTimeout(() => {
+      this.getSuperOrgList();
+    }, 500);
     setTimeout(() => {
       this.getProdClass();
-    }, 500);
+    }, 1500);
   },
   methods: {
     /**
@@ -183,14 +184,14 @@ export default {
             this.superOrgList = res.data;
           } else {
             this.$notify.error({
-              title: "获取课级单位出错1",
+              title: "获取课级单位出错",
               message: res.errMsg,
             });
           }
         })
         .catch((err) => {
           this.$notify.error({
-            title: "获取课级单位出错2",
+            title: "获取课级单位出错",
             message: err,
           });
         });
@@ -211,14 +212,14 @@ export default {
             this.form.OrgArray = this.orgList.map(item => item.ID);
           } else {
             this.$notify.error({
-              title: "获取组级单位出错1",
+              title: "获取组级单位出错",
               message: res.errMsg,
             });
           }
         })
         .catch((err) => {
           this.$notify.error({
-            title: "获取组级单位出错2",
+            title: "获取组级单位出错",
             message: err,
           });
         });
@@ -236,14 +237,14 @@ export default {
             this.form.PartClassArray = this.prodClassOptions;
           } else {
             this.$notify.error({
-              title: "获取产品类别出错1",
+              title: "获取产品类别出错",
               message: res.errMsg,
             });
           }
         })
         .catch((err) => {
           this.$notify.error({
-            title: "获取产品类别出错2",
+            title: "获取产品类别出错",
             message: err,
           });
         });
@@ -313,6 +314,10 @@ export default {
 
   .el-form-item__label {
     font-size: 14px;
+  }
+
+  .el-checkbox {
+    margin-right: 0;
   }
 }
 
