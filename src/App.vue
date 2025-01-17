@@ -17,8 +17,6 @@ export default {
   mounted() {
     this.version = document.querySelector('meta[name="version"]').getAttribute('content');
     this.currentVersion = this.version;
-    console.log('currentVersion:', this.currentVersion);
-    console.log('version:', this.version);
     if (this.currentVersion !== this.version) {
       this.$alert(this.updateMessage, '新版本发布', {
         confirmButtonText: '刷新',

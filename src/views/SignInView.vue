@@ -12,7 +12,7 @@
         </el-input>
       </el-form-item>
       <el-form-item label="密码">
-        <el-input type="password" v-model="loginForm.password" autocomplete="off" show-password>
+        <el-input type="password" v-model="loginForm.password" autocomplete="off">
           <template slot="prefix">
             <svg class="icon" aria-hidden="true">
               <use xlink:href="#icon-lock"></use>
@@ -42,6 +42,7 @@ export default {
       loginForm: {
         username: "",
         password: "",
+        itemId: "",
       },
       userToken: "",
     };
@@ -52,19 +53,41 @@ export default {
      * 登录
      */
     handleLogin() {
+      if (localStorage.getItem('Authorization')) {
+        localStorage.removeItem('Authorization')
+      }
+      if (localStorage.getItem('Username')) {
+        localStorage.removeItem('Username')
+      }
       if (!this.loginForm.username || !this.loginForm.password) {
         this.$message.error("用户名或密码不能为空");
         return;
       }
+      if (process.env.NODE_ENV === 'development' && this.loginForm.username === 'test' && this.$router.currentRoute.path !== "/kanban") {
+        // 不知道ERP里能用的账号密码，所以无奈写了这段测试用，用户名为test直接进
+        this.$router.push("/kanban");
+      }
+      this.loginForm.username = this.loginForm.username.toUpperCase(); // 用户名转大写后再post
       post("/signIn", this.loginForm).then((res) => {
         if (res.code === 200) {
           this.userToken = res.data;
           this.changeLogin({ Authorization: this.userToken });
+          localStorage.setItem('Username', this.loginForm.username);
           if (this.$router.currentRoute.path !== "/kanban") {
             this.$router.push("/kanban");
           }
+        } else {
+          this.$notify.error({
+            title: "登录失败",
+            message: res.message
+          })
         }
-      });
+      }).catch(err => {
+        this.$notify.error({
+          title: "登录失败",
+          message: err
+        })
+      })
     },
   },
 };

@@ -3,6 +3,7 @@ const packageJson = require("./package.json"); // 引入项目的package.json文
 
 module.exports = defineConfig({
   transpileDependencies: true,
+  // productionSourceMap: false, // 隐藏源码
   devServer: {
     port: 8527, // 端口号
     proxy: {

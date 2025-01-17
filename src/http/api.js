@@ -1,3 +1,5 @@
+import axios from "axios";
+
 /**
  * 设置 axios 的默认基础 URL
  */

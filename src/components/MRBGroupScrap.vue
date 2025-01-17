@@ -1,72 +1,75 @@
 <template>
-  <div class="mrb-container">
-    <div class="pixel-svg-btn" @click="dialogFormVisible = true">
-      <svg aria-hidden="true">
+  <el-dialog title="componentName" :visible.sync="dialogFormVisible" width="50vw" :before-close="closeDialog"
+    :append-to-body="true">
+    <div slot="title">
+      <svg class="icon-kanban" aria-hidden="true">
         <use xlink:href="#icon-kanban"></use>
-      </svg>
-      <h2>MRB制程群组报废资料</h2>
+      </svg>&nbsp;
+      <span>{{ componentId }} - {{ componentName }}</span>
     </div>
-    <el-dialog title="MRB制程群组报废资料" :visible.sync="dialogFormVisible" width="40%" :before-close="closeDialog">
-      <div slot="title">
-        <svg class="icon" aria-hidden="true">
-          <use xlink:href="#icon-kanban"></use>
-        </svg>&nbsp;
-        <span>MRB制程群组查询</span>
-      </div>
-      <div class="form-container">
-        <el-form :model="form">
-          <el-form-item label="课级单位" :label-width="formLabelWidth">
-            <el-select v-model="form.SuperOrg" placeholder="课级单位" clearable @visible-change="orgListVisibleChange">
-              <el-option v-for="item in superOrgList" :key="item.ID" :label="item.Name" :value="item.ID">
-                <span style="float: left">{{ item.Name }}</span>
-                <span style="float: right; color: #8492a6; font-size: 13px">{{
-                  item.ID
-                  }}</span>
-              </el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item v-if="form.SuperOrg !== '' && orgList.length > 0" label="组级单位" :label-width="formLabelWidth">
-            <el-checkbox-group v-model="form.OrgArray">
-              <el-checkbox border v-for="option in orgList" :label="option.ID" :key="option.ID">{{
-                option.Name
-                }}</el-checkbox>
-            </el-checkbox-group>
-          </el-form-item>
-          <el-form-item label="报废含加权" :label-width="formLabelWidth">
-            <el-radio-group v-model="form.Weighted">
-              <el-radio label="1">是</el-radio>
-              <el-radio label="0">否</el-radio>
-            </el-radio-group>
-          </el-form-item>
-          <el-form-item label="起讫时间" :label-width="formLabelWidth">
-            <el-date-picker v-model="form.dateRange" type="daterange" range-separator="至" start-placeholder="开始日期"
-              end-placeholder="结束日期" :picker-options="pickerOptions" format="yyyy年MM月dd日" value-format="yyyy-MM-dd">
-            </el-date-picker>
-          </el-form-item>
-          <el-form-item label="产品类别" :label-width="formLabelWidth">
-            <el-checkbox-group v-model="form.PartClassArray">
-              <el-checkbox border v-for="option in prodClassOptions" :label="option" :key="option">{{ option
-                }}</el-checkbox>
-            </el-checkbox-group>
-          </el-form-item>
-          <el-form-item>
-            <el-button id="start-calculating" type="primary" @click="startCalculation">
-              <svg class="icon" aria-hidden="true">
-                <use xlink:href="#icon-calculator"></use>
-              </svg>
-              开始计算
-            </el-button>
-          </el-form-item>
-        </el-form>
-      </div>
-    </el-dialog>
-  </div>
+    <div class="form-container">
+      <el-form :model="form">
+        <el-form-item label="课级单位" :label-width="formLabelWidth">
+          <el-select v-model="form.SuperOrg" placeholder="课级单位" clearable @visible-change="orgListVisibleChange">
+            <el-option v-for="item in superOrgList" :key="item.ID" :label="item.Name" :value="item.ID">
+              <span style="float: left">{{ item.Name }}</span>
+              <span style="float: right; color: #8492a6; font-size: 13px">{{
+                item.ID
+              }}</span>
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item v-if="form.SuperOrg !== '' && orgList.length > 0" label="组级单位" :label-width="formLabelWidth">
+          <el-checkbox-group v-model="form.OrgArray">
+            <el-checkbox border v-for="option in orgList" :label="option.ID" :key="option.ID">{{
+              option.Name
+            }}</el-checkbox>
+          </el-checkbox-group>
+        </el-form-item>
+        <el-form-item label="报废含加权" :label-width="formLabelWidth">
+          <el-radio-group v-model="form.Weighted">
+            <el-radio label="1">是</el-radio>
+            <el-radio label="0">否</el-radio>
+          </el-radio-group>
+        </el-form-item>
+        <el-form-item label="起讫时间" :label-width="formLabelWidth">
+          <el-date-picker v-model="form.dateRange" type="daterange" range-separator="至" start-placeholder="开始日期"
+            end-placeholder="结束日期" :picker-options="pickerOptions" format="yyyy年MM月dd日" value-format="yyyy-MM-dd">
+          </el-date-picker>
+        </el-form-item>
+        <el-form-item label="产品类别" :label-width="formLabelWidth">
+          <el-checkbox-group v-model="form.PartClassArray">
+            <el-checkbox border v-for="option in prodClassOptions" :label="option" :key="option">{{ option
+              }}</el-checkbox>
+          </el-checkbox-group>
+        </el-form-item>
+        <el-form-item>
+          <el-button id="start-calculating" type="primary" @click="startCalculation">
+            <svg class="icon-calculator" aria-hidden="true">
+              <use xlink:href="#icon-calculator"></use>
+            </svg>
+            开始计算
+          </el-button>
+        </el-form-item>
+      </el-form>
+    </div>
+  </el-dialog>
 </template>
 
 <script>
 import { post } from "@/http/api";
 
 export default {
+  props: {
+    componentId: {
+      type: Number,
+      required: true,
+    },
+    componentName: {
+      type: String,
+      required: true,
+    },
+  },
   data() {
     return {
       dialogFormVisible: false, // 控制对话框的显示和隐藏
@@ -138,6 +141,9 @@ export default {
     startCalculation() {
       this.postFormData();
       this.closeDialog();
+    },
+    openDialog() {
+      this.dialogFormVisible = true;
     },
     /**
      * 关闭对话框
@@ -251,14 +257,21 @@ export default {
       _this.postData.parameters = {
         SuperOrg: _this.form.SuperOrg,
         OrgArray: _this.form.OrgArray.join(","),
-        BeginDate: _this.form.dateRange[0],
-        EndDate: _this.form.dateRange[1],
+        BeginDate: _this.form.dateRange[0] || '',
+        EndDate: _this.form.dateRange[1] || '',
         PartClassArray: _this.form.PartClassArray.join(","),
         Weighted: _this.form.Weighted,
         IdStr: "",
       };
+      const loadingInstance = this.$loading({
+        fullscreen: true,
+        text: '拼命查询中...',
+        lock: true,
+        background: 'rgba(240, 240, 240, 0.9)'
+      });
       post("/forward", _this.postData)
         .then((res) => {
+          loadingInstance.close();
           if (res.state === "OK") {
             this.$message({
               message: "查询成功",
@@ -272,6 +285,7 @@ export default {
           }
         })
         .catch((err) => {
+          loadingInstance.close();
           this.$notify.error({
             title: "查询时出错",
             message: err,
@@ -283,63 +297,42 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.mrb-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.icon-kanban {
+  width: 1.5rem;
+  height: 1.5rem;
+  vertical-align: middle;
+}
 
-  .pixel-svg-btn {
-    cursor: pointer;
-    transform: scale(1);
-    transition: transform 0.25s;
+.form-container {
+  background-color: #fff;
+  padding: 20px;
+  border: 2px solid #000;
+  box-shadow: 10px 10px 0 #000;
+  width: 90%;
+  margin: 0 auto;
 
-    svg {
-      fill: currentColor;
-      overflow: hidden;
-    }
-
-    h2 {
-      text-align: center;
-    }
-
-    &:hover {
-      transform: scale(1.1);
-      transition: transform 0.25s;
-    }
+  .el-form-item__label {
+    font-size: 14px;
   }
+}
 
-  .icon {
-    width: 1.5em;
-    height: 1.5em;
-    vertical-align: -0.35em;
-    fill: currentColor;
-    overflow: hidden;
-  }
+#start-calculating {
+  width: 100%;
+  background-color: #000;
+  color: #fff;
+  border: 2px solid #000;
+  box-shadow: 4px 4px 0 #000;
 
-  .form-container {
+  &:hover {
     background-color: #fff;
-    padding: 20px;
-    border: 2px solid #000;
-    box-shadow: 10px 10px 0 #000;
-    width: 90%;
-    margin: 0 auto;
-
-    .el-form-item__label {
-      font-size: 14px;
-    }
+    color: #000;
   }
 
-  #start-calculating {
-    width: 100%;
-    background-color: #000;
-    color: #fff;
-    border: 2px solid #000;
-    box-shadow: 4px 4px 0 #000;
-
-    &:hover {
-      background-color: #fff;
-      color: #000;
-    }
+  .icon-calculator {
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-bottom: 0.2rem;
+    vertical-align: middle;
   }
 }
 </style>
