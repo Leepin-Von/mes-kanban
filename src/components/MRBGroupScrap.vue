@@ -183,14 +183,14 @@ export default {
             this.superOrgList = res.data;
           } else {
             this.$notify.error({
-              title: "获取课级单位出错",
+              title: "获取课级单位出错1",
               message: res.errMsg,
             });
           }
         })
         .catch((err) => {
           this.$notify.error({
-            title: "获取课级单位出错",
+            title: "获取课级单位出错2",
             message: err,
           });
         });
@@ -211,14 +211,14 @@ export default {
             this.form.OrgArray = this.orgList.map(item => item.ID);
           } else {
             this.$notify.error({
-              title: "获取组级单位出错",
+              title: "获取组级单位出错1",
               message: res.errMsg,
             });
           }
         })
         .catch((err) => {
           this.$notify.error({
-            title: "获取组级单位出错",
+            title: "获取组级单位出错2",
             message: err,
           });
         });
@@ -236,14 +236,14 @@ export default {
             this.form.PartClassArray = this.prodClassOptions;
           } else {
             this.$notify.error({
-              title: "获取产品类别出错",
+              title: "获取产品类别出错1",
               message: res.errMsg,
             });
           }
         })
         .catch((err) => {
           this.$notify.error({
-            title: "获取产品类别出错",
+            title: "获取产品类别出错2",
             message: err,
           });
         });

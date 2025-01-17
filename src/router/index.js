@@ -25,6 +25,9 @@ const router = new VueRouter({
 
 // 路由守卫
 router.beforeEach((to, from, next) => {
+  if (to.path === "/") {
+    next("/signIn");
+  }
   const token = localStorage.getItem("Authorization");
   const publicPages = ["/signIn"];
   const authRequired = !publicPages.includes(to.path);
@@ -52,8 +55,11 @@ function isTokenExpired(token) {
     const currentTime = Date.now() / 1000;
     return decoded.exp < currentTime;
   } catch (error) {
-    if (localStorage.getItem('Authorization') === token) {
+    if (localStorage.getItem("Authorization") === token) {
       localStorage.removeItem("Authorization");
+      if (localStorage.getItem("Username")) {
+        localStorage.removeItem("Username");
+      }
     }
     return true; // 如果解析失败，认为 token 已过期
   }

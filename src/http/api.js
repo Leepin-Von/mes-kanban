@@ -33,6 +33,7 @@ axios.interceptors.response.use(
   error => {
     if (error.response && error.response.status === 401) {
       localStorage.removeItem('Authorization');
+      localStorage.removeItem('Username');
       this.$router.push('/signIn');
     }
     return Promise.reject(error);
