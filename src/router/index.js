@@ -26,14 +26,14 @@ const router = new VueRouter({
 // 路由守卫
 router.beforeEach((to, from, next) => {
   if (to.path === "/") {
-    return next("/signIn");
+    return next({ path: "/signIn" });
   }
   const token = localStorage.getItem("Authorization");
   const publicPages = ["/signIn"];
   const authRequired = !publicPages.includes(to.path);
 
   if (authRequired && (!token || isTokenExpired(token))) {
-    return next();
+    return next({ path: "/signIn" });
   } else if (to.path === "/signIn" && token) {
     if (to.query.redirect) {
       return next(to.query.redirect); // 重定向到原始页面
