@@ -18,7 +18,7 @@
     </div>
     <br />
     <el-row :gutter="24">
-      <el-col v-for="component in components" :key="component.componentId" :span="6">
+      <el-col v-for="component in filteredComponents" :key="component.componentId" :span="6">
         <div class="pixel-card">
           <CommonComponent :componentId="component.componentId" :componentName="component.componentName"
             @click="handleComponentClick(component)">
@@ -35,7 +35,8 @@
 import { post } from '@/http/api';
 import CommonComponent from '@/components/CommonComponent.vue';
 // “小程序”导入
-import MRBGroupScrap from '@/components/MRBGroupScrap.vue'
+import MRBGroupScrap from '@/components/MRBGroupScrape.vue'
+import MRBPartNumScrap from '@/components/MRBPartNumScrape.vue';
 
 export default {
   name: 'KanbanView',
@@ -43,6 +44,7 @@ export default {
     CommonComponent,
     // “小程序”注册
     MRBGroupScrap,
+    MRBPartNumScrap,
   },
   data() {
     return {
@@ -52,7 +54,12 @@ export default {
         {
           name: 'MRBGroupScrap', // 组件名
           componentId: 54001, // 功能代码
-          componentName: 'MRB制程群组报废资料查询' // 功能名称
+          componentName: 'MRB制程群组报废资料 查询' // 功能名称
+        },
+        {
+          name: 'MRBPartNumScrap', // 组件名
+          componentId: 54002, // 功能代码
+          componentName: 'MRB料号报废资料 查询' // 功能名称
         },
       ],
       filteredComponents: [],
@@ -69,7 +76,6 @@ export default {
       localStorage.removeItem('Authorization')
       localStorage.removeItem('Username')
       this.$router.push('/signIn')
-      
     },
     /**
      * 查询功能代码或功能名称
@@ -81,8 +87,9 @@ export default {
         // searchValue有值且按下了回车
         this.filteredComponents = this.components.filter(component =>
           component.componentId.toString().includes(value) ||
-          component.componentName.toLowerCase().includes(value)
+          component.componentName.toLowerCase().includes(value.toLowerCase())
         );
+        this.searchValue = '';
         if (this.filteredComponents.length === 0) {
           // 如果过滤结果为空，则显示所有组件
           this.filteredComponents = this.components;
@@ -90,6 +97,7 @@ export default {
       } else {
         // 否则显示所有组件
         this.filteredComponents = this.components;
+        this.searchValue = '';
       }
     },
     /**
@@ -98,28 +106,47 @@ export default {
      */
     handleComponentClick(component) {
       const parameters = {
-        UserId: localStorage.getItem('Username'),
-        PWD: '',
-        ItemId: component.componentId,
+        username: localStorage.getItem('Username'),
+        password: '',
+        itemId: component.componentId,
       }
       // 不知道ERP里能用的账号密码，所以无奈写了这段测试用，用户名为TEST直接进
       if (localStorage.getItem('Username') === 'TEST') {
         this.$refs[component.name][0].openDialog();
         return;
       }
-      post('/forward', parameters).then(res => {
+      post('/signIn', parameters).then(res => {
         if (res.state === 'OK') {
-          this.$refs[component.name][0].openDialog();
+          const auth = localStorage.getItem('Authorization');
+          if (auth) { this.$refs[component.name][0].openDialog(); } else {
+            this.$confirm('检测到当前可能未登录，是否前往登录页面？', '可能未登录', {
+              comfirmButtonText: "前往登录",
+              cancelButtonText: "我就不"
+            }).then(() => {
+              localStorage.removeItem('Username');
+              this.$router.push('/signIn');
+            }).catch(() => {
+              localStorage.removeItem('Username')
+              this.$alert('由不得你，去登录一下吧', '用户疑似抗拒登录', {
+                confirmButtonText: '前往登录',
+                callback: action => {
+                  if (action === 'cancel') {
+                    this.$router.push('/signIn');
+                  }
+                }
+              })
+            })
+          }
         } else {
           this.$notify.error({
             title: '出错',
-            message: '打开【' + component.componentId + ' - ' + component.componentName + '】失败，无此权限'
+            message: `打开【${component.componentId} - ${component.componentName}】失败，无此权限`
           })
         }
       }).catch(err => {
         this.$notify.error({
           title: '出错',
-          message: '打开【' + component.componentId + ' - ' + component.componentName + '】失败，可能的原因：' + err
+          message: `打开【${component.componentId} - ${component.componentName}】失败，可能的原因：${err}`
         })
       })
 

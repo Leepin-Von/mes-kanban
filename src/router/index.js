@@ -53,9 +53,7 @@ function isTokenExpired(token) {
   } catch (error) {
     if (localStorage.getItem("Authorization") === token) {
       localStorage.removeItem("Authorization");
-      if (localStorage.getItem("Username")) {
-        localStorage.removeItem("Username");
-      }
+      localStorage.removeItem("Username");
     }
     return true; // 如果解析失败，认为 token 已过期
   }

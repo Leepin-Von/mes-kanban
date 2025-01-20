@@ -53,17 +53,13 @@ export default {
      * 登录
      */
     handleLogin() {
-      if (localStorage.getItem('Authorization')) {
-        localStorage.removeItem('Authorization')
-      }
-      if (localStorage.getItem('Username')) {
-        localStorage.removeItem('Username')
-      }
+      localStorage.removeItem('Authorization')
+      localStorage.removeItem('Username')
       if (!this.loginForm.username || !this.loginForm.password) {
         this.$message.error("用户名或密码不能为空");
         return;
       }
-      if (process.env.NODE_ENV === 'development' && this.loginForm.username === 'test' && this.$router.currentRoute.path !== "/kanban") {
+      if (this.loginForm.username === 'test' && this.$router.currentRoute.path !== "/kanban") {
         // 不知道ERP里能用的账号密码，所以无奈写了这段测试用，用户名为test直接进
         this.$router.push("/kanban");
       }

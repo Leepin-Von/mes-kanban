@@ -10,24 +10,24 @@
     <div class="form-container">
       <el-form :model="form">
         <el-form-item label="课级单位" :label-width="formLabelWidth">
-          <el-select v-model="form.SuperOrg" placeholder="课级单位" clearable @visible-change="orgListVisibleChange">
+          <el-select v-model="form.superOrg" placeholder="课级单位" clearable @visible-change="orgListVisibleChange">
             <el-option v-for="item in superOrgList" :key="item.ID" :label="item.Name" :value="item.ID">
               <span style="float: left">{{ item.Name }}</span>
               <span style="float: right; color: #8492a6; font-size: 13px">{{
                 item.ID
-                }}</span>
+              }}</span>
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item v-if="form.SuperOrg !== '' && orgList.length > 0" label="组级单位" :label-width="formLabelWidth">
-          <el-checkbox-group v-model="form.OrgArray">
+        <el-form-item v-if="form.superOrg !== '' && orgList.length > 0" label="组级单位" :label-width="formLabelWidth">
+          <el-checkbox-group v-model="form.orgArray">
             <el-checkbox border v-for="option in orgList" :label="option.ID" :key="option.ID">{{
               option.Name
-              }}</el-checkbox>
+            }}</el-checkbox>
           </el-checkbox-group>
         </el-form-item>
         <el-form-item label="报废含加权" :label-width="formLabelWidth">
-          <el-radio-group v-model="form.Weighted">
+          <el-radio-group v-model="form.weighted">
             <el-radio label="1">是</el-radio>
             <el-radio label="0">否</el-radio>
           </el-radio-group>
@@ -38,7 +38,7 @@
           </el-date-picker>
         </el-form-item>
         <el-form-item label="产品类别" :label-width="formLabelWidth">
-          <el-checkbox-group v-model="form.PartClassArray">
+          <el-checkbox-group v-model="form.partClassArray">
             <el-checkbox border v-for="option in prodClassOptions" :label="option" :key="option">{{ option
               }}</el-checkbox>
           </el-checkbox-group>
@@ -78,11 +78,11 @@ export default {
        * 表单数据，post请求的参数
        */
       form: {
-        SuperOrg: "", // 课级单位
-        OrgArray: [], // 组级单位数组
+        superOrg: "", // 课级单位
+        orgArray: [], // 组级单位数组
         dateRange: [], // 日期范围
-        PartClassArray: [], // 产品类别数组
-        Weighted: "0", // 是否加权
+        partClassArray: [], // 产品类别数组
+        weighted: "0", // 是否加权
       },
       superOrgList: [], // 课级单位列表
       orgList: [], // 组级单位列表
@@ -152,11 +152,11 @@ export default {
     closeDialog() {
       this.dialogFormVisible = false;
       this.form = {
-        SuperOrg: "",
-        OrgArray: this.orgList.map(item => item.ID),
+        superOrg: "",
+        orgArray: this.orgList.map(item => item.ID),
         dateRange: [],
-        PartClassArray: this.prodClassOptions,
-        Weighted: "0",
+        partClassArray: this.prodClassOptions,
+        weighted: "0",
       };
     },
     /**
@@ -203,13 +203,13 @@ export default {
       const _this = this;
       _this.postData.docType = "PassOrgList";
       _this.postData.parameters = {
-        SuperOrgId: _this.form.SuperOrg,
+        SuperOrgId: _this.form.superOrg,
       };
       post("/forward", _this.postData)
         .then((res) => {
           if (res.state === "OK") {
             this.orgList = res.data;
-            this.form.OrgArray = this.orgList.map(item => item.ID);
+            this.form.orgArray = this.orgList.map(item => item.ID);
           } else {
             this.$notify.error({
               title: "获取组级单位出错",
@@ -234,7 +234,7 @@ export default {
         .then((res) => {
           if (res.state === "OK") {
             this.prodClassOptions = res.data;
-            this.form.PartClassArray = this.prodClassOptions;
+            this.form.partClassArray = this.prodClassOptions;
           } else {
             this.$notify.error({
               title: "获取产品类别出错",
@@ -256,23 +256,17 @@ export default {
       const _this = this;
       _this.postData.docType = "MRBGroupScrape";
       _this.postData.parameters = {
-        SuperOrg: _this.form.SuperOrg,
-        OrgArray: _this.form.OrgArray.join(","),
+        SuperOrg: _this.form.superOrg,
+        OrgArray: _this.form.orgArray.join(","),
         BeginDate: _this.form.dateRange[0] || '',
         EndDate: _this.form.dateRange[1] || '',
-        PartClassArray: _this.form.PartClassArray.join(","),
-        Weighted: _this.form.Weighted,
+        PartClassArray: _this.form.partClassArray.join(","),
+        Weighted: _this.form.weighted,
         IdStr: "",
       };
-      const loadingInstance = this.$loading({
-        fullscreen: true,
-        text: '拼命查询中...',
-        lock: true,
-        background: 'rgba(240, 240, 240, 0.9)'
-      });
       post("/forward", _this.postData)
         .then((res) => {
-          loadingInstance.close();
+          this.$showLoading().close();
           if (res.state === "OK") {
             this.$message({
               message: "查询成功",
@@ -286,7 +280,7 @@ export default {
           }
         })
         .catch((err) => {
-          loadingInstance.close();
+          this.$showLoading().close();
           this.$notify.error({
             title: "查询时出错",
             message: err,

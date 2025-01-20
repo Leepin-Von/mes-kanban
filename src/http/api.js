@@ -10,14 +10,14 @@ axios.defaults.baseURL = "/api";
  * 在每次请求前检查本地存储中的 Authorization token 并将其添加到请求头中
  */
 axios.interceptors.request.use(
-  config => {
-    const token = localStorage.getItem('Authorization');
+  (config) => {
+    const token = localStorage.getItem("Authorization");
     if (token) {
-      config.headers['token'] = token;
+      config.headers["token"] = token;
     }
     return config;
   },
-  error => {
+  (error) => {
     return Promise.reject(error);
   }
 );
@@ -27,14 +27,14 @@ axios.interceptors.request.use(
  * 响应错误或状态码401时删除本地存储中的 Authorization token 并导航到登录页面
  */
 axios.interceptors.response.use(
-  response => {
+  (response) => {
     return response;
   },
-  error => {
+  (error) => {
     if (error.response && error.response.status === 401) {
-      localStorage.removeItem('Authorization');
-      localStorage.removeItem('Username');
-      this.$router.push('/signIn');
+      localStorage.removeItem("Authorization");
+      localStorage.removeItem("Username");
+      this.$router.push("/signIn");
     }
     return Promise.reject(error);
   }
