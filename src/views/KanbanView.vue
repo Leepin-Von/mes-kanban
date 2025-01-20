@@ -110,13 +110,8 @@ export default {
         password: '',
         itemId: component.componentId,
       }
-      // 不知道ERP里能用的账号密码，所以无奈写了这段测试用，用户名为TEST直接进
-      if (localStorage.getItem('Username') === 'TEST') {
-        this.$refs[component.name][0].openDialog();
-        return;
-      }
       post('/signIn', parameters).then(res => {
-        if (res.state === 'OK') {
+        if (res.code === 200) {
           const auth = localStorage.getItem('Authorization');
           if (auth) { this.$refs[component.name][0].openDialog(); } else {
             this.$confirm('检测到当前可能未登录，是否前往登录页面？', '可能未登录', {
@@ -124,6 +119,7 @@ export default {
               cancelButtonText: "我就不"
             }).then(() => {
               localStorage.removeItem('Username');
+              localStorage.removeItem('Authorization');
               this.$router.push('/signIn');
             }).catch(() => {
               localStorage.removeItem('Username')

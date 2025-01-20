@@ -15,7 +15,7 @@
               <span style="float: left">{{ item.Name }}</span>
               <span style="float: right; color: #8492a6; font-size: 13px">{{
                 item.ID
-              }}</span>
+                }}</span>
             </el-option>
           </el-select>
         </el-form-item>
@@ -23,7 +23,7 @@
           <el-checkbox-group v-model="form.orgArray">
             <el-checkbox border v-for="option in orgList" :label="option.ID" :key="option.ID">{{
               option.Name
-            }}</el-checkbox>
+              }}</el-checkbox>
           </el-checkbox-group>
         </el-form-item>
         <el-form-item label="报废含加权" :label-width="formLabelWidth">
@@ -205,24 +205,26 @@ export default {
       _this.postData.parameters = {
         SuperOrgId: _this.form.superOrg,
       };
-      post("/forward", _this.postData)
-        .then((res) => {
-          if (res.state === "OK") {
-            this.orgList = res.data;
-            this.form.orgArray = this.orgList.map(item => item.ID);
-          } else {
+      if (_this.form.superOrg) {
+        post("/forward", _this.postData)
+          .then((res) => {
+            if (res.state === "OK") {
+              this.orgList = res.data;
+              this.form.orgArray = this.orgList.map(item => item.ID);
+            } else {
+              this.$notify.error({
+                title: "获取组级单位出错",
+                message: res.errMsg,
+              });
+            }
+          })
+          .catch((err) => {
             this.$notify.error({
               title: "获取组级单位出错",
-              message: res.errMsg,
+              message: err,
             });
-          }
-        })
-        .catch((err) => {
-          this.$notify.error({
-            title: "获取组级单位出错",
-            message: err,
           });
-        });
+      }
     },
     /**
      * 获取产品类别选项

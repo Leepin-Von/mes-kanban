@@ -59,10 +59,6 @@ export default {
         this.$message.error("用户名或密码不能为空");
         return;
       }
-      if (this.loginForm.username === 'test' && this.$router.currentRoute.path !== "/kanban") {
-        // 不知道ERP里能用的账号密码，所以无奈写了这段测试用，用户名为test直接进
-        this.$router.push("/kanban");
-      }
       this.loginForm.username = this.loginForm.username.toUpperCase(); // 用户名转大写后再post
       post("/signIn", this.loginForm).then((res) => {
         if (res.code === 200) {

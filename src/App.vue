@@ -1,31 +1,38 @@
 <template>
-  <div id="app" :data-version="version">
+  <div id="app" :data-version="ver">
     <router-view />
-    <p class="footer">当前版本：{{ currentVersion }}</p>
+    <p class="footer">当前版本：{{ curVer }}</p>
   </div>
 </template>
 
 <script>
+import PackageJson from '../package.json';
+
 export default {
   data() {
     return {
-      version: '',
-      currentVersion: '',
+      curVer: '',
+      ver: PackageJson.version,
       updateMessage: '有新版本发布，请刷新页面以更新到最新版本'
     };
   },
   mounted() {
-    this.version = document.querySelector('meta[name="version"]').getAttribute('content');
-    this.currentVersion = this.version;
-    if (this.currentVersion !== this.version) {
-      this.$alert(this.updateMessage, '新版本发布', {
-        confirmButtonText: '刷新',
-        callback: action => {
-          if (action === 'confirm') {
-            location.reload();
+    this.checkVersion();
+  },
+  methods: {
+    checkVersion() {
+      this.curVer = localStorage.getItem('ver');
+      if (this.curVer !== this.ver) {
+        this.$alert(this.updateMessage, '新版本发布', {
+          confirmButtonText: '刷新',
+          callback: action => {
+            if (action === 'confirm') {
+              location.reload();
+            }
           }
-        }
-      });
+        });
+        localStorage.setItem('ver', this.ver);
+      }
     }
   }
 };
