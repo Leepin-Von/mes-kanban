@@ -1,6 +1,7 @@
 <template>
   <div class="kanban-component-container">
     <div class="pixel-svg-btn" @click="handleClick">
+      <h1>{{ componentId }}</h1>
       <svg aria-hidden="true">
         <use xlink:href="#icon-kanban"></use>
       </svg>
@@ -47,6 +48,7 @@ export default {
       overflow: hidden;
     }
 
+    h1,
     h2 {
       text-align: center;
     }

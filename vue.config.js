@@ -1,8 +1,8 @@
-import { defineConfig } from "@vue/cli-service";
+const { defineConfig } = require("@vue/cli-service");
 
-export default defineConfig({
+module.exports = defineConfig({
   transpileDependencies: true,
-  productionSourceMap: false, // 隐藏源码
+  // productionSourceMap: false, // 隐藏源码
   devServer: {
     port: 8527, // 端口号
     proxy: {

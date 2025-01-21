@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="componentName" :visible.sync="dialogFormVisible" width="50vw" :before-close="closeDialog"
+  <el-dialog title="componentName" :visible.sync="dialogFormVisible" width="30vw" :before-close="closeDialog"
     :append-to-body="true">
     <div slot="title">
       <svg class="icon-kanban" aria-hidden="true">

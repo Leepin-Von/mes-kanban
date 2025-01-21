@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="componentName" :visible.sync="dialogFormVisible" width="50vw" :before-close="closeDialog"
+  <el-dialog title="componentName" :visible.sync="dialogFormVisible" width="28vw" :before-close="closeDialog"
     :append-to-body="true">
     <div slot="title">
       <svg class="icon-kanban" aria-hidden="true">
@@ -79,7 +79,7 @@ export default {
       },
       rules: {
         partNum: [
-          { required: true, message: '请输入料号', trigger: 'blur' }
+          { required: true, message: '请输入料号', trigger: 'blur' },
         ],
       },
       pickerOptions: {
