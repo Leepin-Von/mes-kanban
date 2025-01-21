@@ -6,6 +6,20 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "17797526",
+      "name": "刷新",
+      "font_class": "refresh",
+      "unicode": "e654",
+      "unicode_decimal": 58964
+    },
+    {
+      "icon_id": "43197853",
+      "name": "MRB",
+      "font_class": "MRBGroupScrape",
+      "unicode": "e602",
+      "unicode_decimal": 58882
+    },
+    {
       "icon_id": "16169308",
       "name": "计算器",
       "font_class": "calculator",

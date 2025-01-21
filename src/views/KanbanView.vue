@@ -8,6 +8,13 @@
         <input type="text" class="input-search" v-model="searchValue" placeholder="输入 功能代码 或 功能名称"
           @keyup.enter="searchComponents">
       </el-tooltip>
+      <el-tooltip class="item" effect="dark" content="刷新" placement="bottom">
+        <div id="refresh" @click="refresh">
+          <svg class="icon-refresh" aria-hidden="true">
+            <use xlink:href="#icon-refresh"></use>
+          </svg>
+        </div>
+      </el-tooltip>
       <el-tooltip class="item" effect="dark" content="退出登录" placement="bottom">
         <div id="avatar" @click="handleAvatarClick">
           <svg class="icon-signOut" aria-hidden="true">
@@ -69,6 +76,13 @@ export default {
     this.filteredComponents = this.components; // 初始化时显示所有组件
   },
   methods: {
+    /**
+     * 刷新
+     */
+    refresh() {
+      this.searchValue = '';
+      this.filteredComponents = this.components;
+    },
     /**
      * 退出登录
      */
@@ -178,11 +192,12 @@ export default {
       padding: 4px;
       border: 2px solid #000;
       box-shadow: 2px 2px 0 #000;
-      margin-right: 20px;
+      margin-right: 5px;
       outline: none;
       font-size: 1rem;
     }
 
+    #refresh,
     #avatar {
       padding: 4px;
       border: 2px solid #000;
@@ -194,10 +209,15 @@ export default {
         transform: scale(1.1);
       }
 
+      .icon-refresh,
       .icon-signOut {
         width: 1.5rem;
         height: 1.5rem;
       }
+    }
+
+    #refresh {
+      margin-right: 1.5rem;
     }
   }
 
