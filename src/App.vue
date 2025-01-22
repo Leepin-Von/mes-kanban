@@ -52,6 +52,7 @@ export default {
     bottom: 0;
     color: #666;
     user-select: none;
+    font-size: calc(0.5rem + 0.5vw);
   }
 }
 

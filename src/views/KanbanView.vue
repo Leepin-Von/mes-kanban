@@ -24,8 +24,8 @@
       </el-tooltip>
     </div>
     <br />
-    <el-row :gutter="24">
-      <el-col v-for="component in filteredComponents" :key="component.componentId" :span="6">
+    <el-row :gutter="25">
+      <el-col v-for="component in filteredComponents" :key="component.componentId" :span="5">
         <div class="pixel-card">
           <CommonComponent :componentId="component.componentId" :componentName="component.componentName"
             @click="handleComponentClick(component)">
@@ -44,6 +44,7 @@ import CommonComponent from '@/components/CommonComponent.vue';
 // “小程序”导入
 import MRBGroupScrap from '@/components/MRBGroupScrape.vue'
 import MRBPartNumScrap from '@/components/MRBPartNumScrape.vue';
+import MRBPartNumList from '@/components/MRBPartNumList.vue';
 
 export default {
   name: 'KanbanView',
@@ -52,6 +53,7 @@ export default {
     // “小程序”注册
     MRBGroupScrap,
     MRBPartNumScrap,
+    MRBPartNumList,
   },
   data() {
     return {
@@ -67,6 +69,11 @@ export default {
           name: 'MRBPartNumScrap', // 组件名
           componentId: 54002, // 功能代码
           componentName: 'MRB料号报废资料 查询' // 功能名称
+        },
+        {
+          name: 'MRBPartNumList', // 组件名
+          componentId: 54003, // 功能代码
+          componentName: 'MRB料号资料列表 查询' // 功能名称
         },
       ],
       filteredComponents: [],
@@ -188,18 +195,18 @@ export default {
 
     .input-search {
       width: 20%;
-      height: 24px;
+      height: 2.7vh;
       padding: 4px;
       border: 2px solid #000;
       box-shadow: 2px 2px 0 #000;
-      margin-right: 5px;
+      margin-right: 0.5vw;
       outline: none;
-      font-size: 1rem;
+      font-size: calc(0.5rem + 0.35vw);
     }
 
     #refresh,
     #avatar {
-      padding: 4px;
+      padding: 0.5vh 0.3vw 0.3vh;
       border: 2px solid #000;
       box-shadow: 2px 2px 0 #000;
       cursor: pointer;
@@ -223,6 +230,10 @@ export default {
 
   .el-row {
     width: 99.5vw;
+
+    .el-col {
+      gap: 16px;
+    }
 
     .pixel-card {
       background-color: #fff;

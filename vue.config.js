@@ -2,7 +2,7 @@ const { defineConfig } = require("@vue/cli-service");
 
 module.exports = defineConfig({
   transpileDependencies: true,
-  productionSourceMap: false, // 隐藏源码
+  // productionSourceMap: false, // 隐藏源码
   devServer: {
     port: 8527, // 端口号
     proxy: {

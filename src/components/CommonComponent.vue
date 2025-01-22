@@ -46,11 +46,23 @@ export default {
     svg {
       fill: currentColor;
       overflow: hidden;
+      width: calc(15rem + 2vw);
+      height: calc(10rem + 2vh);
     }
 
     h1,
     h2 {
       text-align: center;
+      margin-bottom: 0;
+      flex-wrap: wrap;
+    }
+
+    h1 {
+      font-size: calc(1.5rem + 0.5vw);
+    }
+
+    h2 {
+      font-size: calc(1rem + 0.5vw);
     }
 
     &:hover {
@@ -59,12 +71,12 @@ export default {
     }
   }
 
-  .icon {
-    width: 1.5em;
-    height: 1.5em;
-    vertical-align: -0.35em;
-    fill: currentColor;
-    overflow: hidden;
-  }
+  // .icon {
+  //   width: 1.5rem;
+  //   height: 1.5rem;
+  //   vertical-align: -0.35rem;
+  //   fill: currentColor;
+  //   overflow: hidden;
+  // }
 }
 </style>

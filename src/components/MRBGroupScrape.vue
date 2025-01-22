@@ -18,7 +18,7 @@
               <span style="float: left">{{ item.Name }}</span>
               <span style="float: right; color: #8492a6; font-size: 13px">{{
                 item.ID
-              }}</span>
+                }}</span>
             </el-option>
           </el-select>
         </el-form-item>
@@ -26,7 +26,7 @@
           <el-checkbox-group v-model="form.orgArray">
             <el-checkbox border v-for="option in orgList" :label="option.ID" :key="option.ID">{{
               option.Name
-            }}</el-checkbox>
+              }}</el-checkbox>
           </el-checkbox-group>
         </el-form-item>
         <el-form-item label="报废含加权" :label-width="formLabelWidth">
