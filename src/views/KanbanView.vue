@@ -24,17 +24,15 @@
       </el-tooltip>
     </div>
     <br />
-    <el-row :gutter="25">
-      <el-col v-for="component in filteredComponents" :key="component.componentId" :span="5">
-        <div class="pixel-card">
-          <CommonComponent :componentId="component.componentId" :componentName="component.componentName"
-            @click="handleComponentClick(component)">
-            <component :ref="component.name" :is="component.name" :componentId="component.componentId"
-              :componentName="component.componentName" />
-          </CommonComponent>
-        </div>
-      </el-col>
-    </el-row>
+    <div class="components-container">
+      <div class="pixel-card" v-for="component in filteredComponents" :key="component.componentId">
+        <CommonComponent :componentId="component.componentId" :componentName="component.componentName"
+          @click="handleComponentClick(component)">
+          <component :ref="component.name" :is="component.name" :componentId="component.componentId"
+            :componentName="component.componentName" />
+        </CommonComponent>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -174,13 +172,14 @@ export default {
 <style lang="scss" scoped>
 .home {
   height: 100vh;
+  width: 100vw;
   background-color: #f0f0f0;
 
   .navbar {
-    width: 98.25vw;
+    width: 98.25%;
     background-color: #fff;
     margin: 0 auto;
-    padding: 10px;
+    padding: 5px;
     border: 2px solid #000;
     box-shadow: 2px 2px 0 #000;
     display: flex;
@@ -228,19 +227,18 @@ export default {
     }
   }
 
-  .el-row {
+  .components-container {
     width: 99.5vw;
-
-    .el-col {
-      gap: 16px;
-    }
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
 
     .pixel-card {
       background-color: #fff;
       padding: 20px;
       border: 2px solid #000;
       box-shadow: 5px 5px 0 #000;
-      width: 90%;
+      width: 25vw;
       margin: 0 auto;
     }
   }

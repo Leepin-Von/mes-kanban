@@ -46,15 +46,14 @@ export default {
     svg {
       fill: currentColor;
       overflow: hidden;
-      width: calc(15rem + 2vw);
-      height: calc(10rem + 2vh);
+      width: calc(100% + 1vw);
+      height: calc(100% + 1vw);
     }
 
     h1,
     h2 {
       text-align: center;
       margin-bottom: 0;
-      flex-wrap: wrap;
     }
 
     h1 {
@@ -70,13 +69,5 @@ export default {
       transition: transform 0.25s;
     }
   }
-
-  // .icon {
-  //   width: 1.5rem;
-  //   height: 1.5rem;
-  //   vertical-align: -0.35rem;
-  //   fill: currentColor;
-  //   overflow: hidden;
-  // }
 }
 </style>
