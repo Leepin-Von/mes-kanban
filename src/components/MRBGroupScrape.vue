@@ -11,11 +11,14 @@
       <el-form :model="form">
         <el-form-item label="课级单位" :label-width="formLabelWidth">
           <el-select v-model="form.superOrg" placeholder="课级单位" clearable @visible-change="orgListVisibleChange">
+            <template slot="empty">
+              <el-skeleton style="width: 100%; margin-top: 8px;" animated />
+            </template>
             <el-option v-for="item in superOrgList" :key="item.ID" :label="item.Name" :value="item.ID">
               <span style="float: left">{{ item.Name }}</span>
               <span style="float: right; color: #8492a6; font-size: 13px">{{
                 item.ID
-                }}</span>
+              }}</span>
             </el-option>
           </el-select>
         </el-form-item>
@@ -23,7 +26,7 @@
           <el-checkbox-group v-model="form.orgArray">
             <el-checkbox border v-for="option in orgList" :label="option.ID" :key="option.ID">{{
               option.Name
-              }}</el-checkbox>
+            }}</el-checkbox>
           </el-checkbox-group>
         </el-form-item>
         <el-form-item label="报废含加权" :label-width="formLabelWidth">
@@ -127,14 +130,6 @@ export default {
       },
     };
   },
-  created() {
-    setTimeout(() => {
-      this.getSuperOrgList();
-    }, 500);
-    setTimeout(() => {
-      this.getProdClass();
-    }, 1500);
-  },
   methods: {
     /**
      * 开始计算
@@ -144,6 +139,7 @@ export default {
       this.closeDialog();
     },
     openDialog() {
+      this.getProdClass();
       this.dialogFormVisible = true;
     },
     /**
@@ -166,7 +162,7 @@ export default {
     orgListVisibleChange(e) {
       if (e) {
         // 下拉框显示
-        return;
+        this.getSuperOrgList();
       } else {
         // 下拉框隐藏
         this.getOrgList();

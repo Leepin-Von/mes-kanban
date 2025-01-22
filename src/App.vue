@@ -13,7 +13,7 @@ export default {
     return {
       curVer: '',
       ver: PackageJson.version,
-      updateMessage: '有新版本发布，请刷新页面以更新到最新版本'
+      updateMessage: '新版本发布：单一料号识别码新增预设为MRB01'
     };
   },
   mounted() {

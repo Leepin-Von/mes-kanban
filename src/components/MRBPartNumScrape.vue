@@ -70,7 +70,7 @@ export default {
       * 表单数据，post请求的参数
       */
       form: {
-        idStr: '', // 识别码
+        idStr: 'MRB01', // 识别码
         partNum: '', // 料号
         revision: '', // 板序
         dateRange: [], // 日期范围
@@ -151,7 +151,7 @@ export default {
     closeDialog() {
       this.dialogFormVisible = false;
       this.form = {
-        idStr: '',
+        idStr: 'MRB01',
         partNum: '',
         revision: '',
         dateRange: [],
