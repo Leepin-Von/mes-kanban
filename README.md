@@ -10,19 +10,19 @@
 ## 开发须知
 - 项目根目录下`package.json`文件中的`version`为项目版本号
 - 黄信忠主任所谓的“小程序”就是`src/components/`下的vue文件，这些vue作为动态组件，在`scr/views/KanbanView.vue`中被引入
-```html
-<el-row :gutter="24">
-    <el-col v-for="component in filteredComponents" :key="component.componentId" :span="6">
-        <div class="pixel-card">
-            <CommonComponent :componentId="component.componentId" :componentName="component.componentName"
-            @click="handleComponentClick(component)">
-            <component :ref="component.name" :is="component.name" :componentId="component.componentId"
-                :componentName="component.componentName" />
-            </CommonComponent>
-        </div>
-    </el-col>
-</el-row>
-```
+    ```html
+    <el-row :gutter="24">
+        <el-col v-for="component in filteredComponents" :key="component.componentId" :span="6">
+            <div class="pixel-card">
+                <CommonComponent :componentId="component.componentId" :componentName="component.componentName"
+                @click="handleComponentClick(component)">
+                <component :ref="component.name" :is="component.name" :componentId="component.componentId"
+                    :componentName="component.componentName" />
+                </CommonComponent>
+            </div>
+        </el-col>
+    </el-row>
+    ```
 - 本项目中使用的图标来自iconfont，采用symbol样式
     - 目前已有的几个图标名分别是：
         1. `icon-calculator`
@@ -38,10 +38,11 @@
         11. `icon-yes`
         12. `icon-delete`
 
-使用方式：
-```html
-<svg aria-hidden="true">
-    <!--icon-signIn为图标名称，可在`src/assets/iconfont/iconfont.js`中找到-->
-    <use xlink:href="#icon-signIn"></use>
-</svg>
-```
+    使用方式：
+    ```html
+    <svg aria-hidden="true">
+        <!--icon-signIn为图标名称，可在`src/assets/iconfont/iconfont.js`中找到-->
+        <use xlink:href="#icon-signIn"></use>
+    </svg>
+    ```
+- 更新版本的更新信息暂时写在了`App.vue`中的`updateMessage`

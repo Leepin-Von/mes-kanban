@@ -13,11 +13,12 @@ export default {
     return {
       curVer: '',
       ver: PackageJson.version,
-      updateMessage: '新版本发布：单一料号识别码新增预设为MRB01'
+      updateMessage: '新增：54003-MRB料号资料列表查询'
     };
   },
   mounted() {
     this.checkVersion();
+    this.fetchUpdateMessage();
   },
   methods: {
     checkVersion() {
@@ -33,7 +34,7 @@ export default {
         });
         localStorage.setItem('ver', this.ver);
       }
-    }
+    },
   }
 };
 </script>
