@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="componentName" :visible.sync="dialogFormVisible" width="30vw" :before-close="closeDialog"
+  <el-dialog title="componentName" :visible.sync="dialogFormVisible" :before-close="closeDialog"
     :append-to-body="true">
     <div slot="title">
       <svg class="icon-kanban" aria-hidden="true">
@@ -18,7 +18,7 @@
               <span style="float: left">{{ item.Name }}</span>
               <span style="float: right; color: #8492a6; font-size: 13px">{{
                 item.ID
-                }}</span>
+              }}</span>
             </el-option>
           </el-select>
         </el-form-item>
@@ -26,7 +26,7 @@
           <el-checkbox-group v-model="form.orgArray">
             <el-checkbox border v-for="option in orgList" :label="option.ID" :key="option.ID">{{
               option.Name
-              }}</el-checkbox>
+            }}</el-checkbox>
           </el-checkbox-group>
         </el-form-item>
         <el-form-item label="报废含加权" :label-width="formLabelWidth">
@@ -290,46 +290,50 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.icon-kanban {
-  width: 1.5rem;
-  height: 1.5rem;
-  vertical-align: middle;
-}
+.el-dialog {
+  width: clamp(550px, 30vw, 32vw) !important;
 
-.form-container {
-  background-color: #fff;
-  padding: 20px;
-  border: 2px solid #000;
-  box-shadow: 10px 10px 0 #000;
-  width: 90%;
-  margin: 0 auto;
-
-  .el-form-item__label {
-    font-size: 14px;
-  }
-
-  .el-checkbox {
-    margin-right: 0;
-  }
-}
-
-#start-calculating {
-  width: 100%;
-  background-color: #000;
-  color: #fff;
-  border: 2px solid #000;
-  box-shadow: 4px 4px 0 #000;
-
-  &:hover {
-    background-color: #fff;
-    color: #000;
-  }
-
-  .icon-calculator {
+  .icon-kanban {
     width: 1.5rem;
     height: 1.5rem;
-    margin-bottom: 0.2rem;
     vertical-align: middle;
+  }
+
+  .form-container {
+    background-color: #fff;
+    padding: 20px;
+    border: 2px solid #000;
+    box-shadow: 10px 10px 0 #000;
+    width: 90%;
+    margin: 0 auto;
+
+    .el-form-item__label {
+      font-size: 14px;
+    }
+
+    .el-checkbox {
+      margin-right: 0;
+    }
+  }
+
+  #start-calculating {
+    width: 100%;
+    background-color: #000;
+    color: #fff;
+    border: 2px solid #000;
+    box-shadow: 4px 4px 0 #000;
+
+    &:hover {
+      background-color: #fff;
+      color: #000;
+    }
+
+    .icon-calculator {
+      width: 1.5rem;
+      height: 1.5rem;
+      margin-bottom: 0.2rem;
+      vertical-align: middle;
+    }
   }
 }
 </style>

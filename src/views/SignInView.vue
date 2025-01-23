@@ -1,6 +1,6 @@
 <template>
   <div class="login-container">
-    <h2 style="text-align: center;">登&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;录</h2>
+    <h2 style="text-align: center; font-size: calc(1rem + 1vw);">登&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;录</h2>
     <el-form :model="loginForm" @submit.native.prevent="handleLogin" @keyup.enter.native="handleLogin">
       <el-form-item label="用户名">
         <el-input v-model="loginForm.username" autocomplete="off">
@@ -87,28 +87,42 @@ export default {
 
 <style lang="scss">
 .login-container {
-  width: 400px;
-  margin: 100px auto;
-  padding: 20px;
+  width: calc(200px + 10vw);
+  margin: 15vh auto;
+  padding: calc(1rem + 1vw);
   background-color: #f0f0f0;
-  border: 4px solid #000;
-  box-shadow: 8px 8px 0 #000;
-
-  .icon {
-    width: 1.5em;
-    height: 1.5em;
-    vertical-align: -0.35em;
-    fill: currentColor;
-    overflow: hidden;
-  }
+  border: min(4px, calc(4px + 1vw)) solid #000;
+  box-shadow: calc(0.2rem + 0.1vw) calc(0.2rem + 0.1vw) 0 #000;
 
   .el-form-item {
-    margin-bottom: 20px;
+    margin-bottom: calc(0.8rem + 0.1vw);
+
+    .el-form-item__label {
+      font-size: calc(0.75rem + 0.3vw);
+      line-height: calc(10px + 2vw);
+    }
+
+    .el-form-item__content {
+      .el-input__prefix {
+        display: flex;
+        align-items: center;
+
+        .icon {
+          width: calc(1rem + 0.5vw);
+          height: calc(1rem + 0.5vh);
+          vertical-align: calc(-0.38rem + 0.5vh);
+          fill: currentColor;
+          overflow: hidden;
+        }
+      }
+    }
   }
 
   .el-input__inner {
     border: 2px solid #000;
     box-shadow: 2px 2px 0 #000;
+    height: calc(1.3rem + 2vh);
+    font-size: calc(0.8rem + 0.5vw);
   }
 
   .el-button {
@@ -117,29 +131,22 @@ export default {
     color: #fff;
     border: 2px solid #000;
     box-shadow: 4px 4px 0 #000;
+    font-size: calc(0.75rem + 0.3vw);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     &:hover {
       background-color: #fff;
       color: #000;
     }
-  }
 
-  .el-tabs__item {
-    font-size: 14px;
-
-    &:hover {
-      color: #989797;
+    .icon {
+      width: calc(1rem + 0.5vw);
+      height: calc(1rem + 0.5vh);
+      fill: currentColor;
+      overflow: hidden;
     }
-  }
-
-  .el-tabs__item.is-active {
-    color: #000000;
-    font-weight: bold;
-  }
-
-  .el-tabs__active-bar {
-    height: 4px;
-    background-color: #000;
   }
 }
 </style>

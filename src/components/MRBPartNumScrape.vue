@@ -1,6 +1,5 @@
 <template>
-  <el-dialog title="componentName" :visible.sync="dialogFormVisible" width="28vw" :before-close="closeDialog"
-    :append-to-body="true">
+  <el-dialog title="componentName" :visible.sync="dialogFormVisible" :before-close="closeDialog" :append-to-body="true">
     <div slot="title">
       <svg class="icon-kanban" aria-hidden="true">
         <use xlink:href="#icon-kanban"></use>
@@ -205,47 +204,51 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.icon-kanban {
-  width: 1.5rem;
-  height: 1.5rem;
-  vertical-align: middle;
-}
+.el-dialog {
+  width: clamp(550px, 28vw, 30vw) !important;
 
-.form-container {
-  background-color: #fff;
-  padding: 20px;
-  border: 2px solid #000;
-  box-shadow: 10px 10px 0 #000;
-  width: 90%;
-  margin: 0 auto;
-
-  .el-form-item__label {
-    font-size: 14px;
+  .icon-kanban {
+    width: 1.5rem;
+    height: 1.5rem;
+    vertical-align: middle;
   }
 
-  .el-checkbox {
-    margin-right: 0;
-  }
-
-  #start-searching {
-    width: 100%;
-    background-color: #000;
-    color: #fff;
+  .form-container {
+    background-color: #fff;
+    padding: 20px;
     border: 2px solid #000;
-    box-shadow: 4px 4px 0 #000;
-    display: block;
+    box-shadow: 10px 10px 0 #000;
+    width: 90%;
     margin: 0 auto;
 
-    &:hover {
-      background-color: #fff;
-      color: #000;
+    .el-form-item__label {
+      font-size: 14px;
     }
 
-    .icon-search {
-      width: 1.5rem;
-      height: 1.5rem;
-      margin-bottom: 0.2rem;
-      vertical-align: middle;
+    .el-checkbox {
+      margin-right: 0;
+    }
+
+    #start-searching {
+      width: 100%;
+      background-color: #000;
+      color: #fff;
+      border: 2px solid #000;
+      box-shadow: 4px 4px 0 #000;
+      display: block;
+      margin: 0 auto;
+
+      &:hover {
+        background-color: #fff;
+        color: #000;
+      }
+
+      .icon-search {
+        width: 1.5rem;
+        height: 1.5rem;
+        margin-bottom: 0.2rem;
+        vertical-align: middle;
+      }
     }
   }
 }
