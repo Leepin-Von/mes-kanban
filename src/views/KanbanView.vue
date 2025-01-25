@@ -61,17 +61,17 @@ export default {
         {
           name: 'MRBGroupScrap', // 组件名
           componentId: 54001, // 功能代码
-          componentName: 'MRB制程群组报废资料 查询' // 功能名称
+          componentName: 'MRB制程群组报废资料查询' // 功能名称
         },
         {
           name: 'MRBPartNumScrap', // 组件名
           componentId: 54002, // 功能代码
-          componentName: 'MRB料号报废资料 查询' // 功能名称
+          componentName: 'MRB料号报废资料查询' // 功能名称
         },
         {
           name: 'MRBPartNumList', // 组件名
           componentId: 54003, // 功能代码
-          componentName: 'MRB料号资料列表 查询' // 功能名称
+          componentName: 'MRB料号资料列表查询' // 功能名称
         },
       ],
       filteredComponents: [],

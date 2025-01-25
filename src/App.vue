@@ -13,12 +13,11 @@ export default {
     return {
       curVer: '',
       ver: PackageJson.version,
-      updateMessage: '新增：54003-MRB料号资料列表查询'
+      updateMessage: '祝各位蛇年大吉！新年快乐！\n【更新内容】\n  1. 页面细节优化\n  2. 部分页面美化'
     };
   },
   mounted() {
     this.checkVersion();
-    this.fetchUpdateMessage();
   },
   methods: {
     checkVersion() {
@@ -30,7 +29,8 @@ export default {
             if (action === 'confirm') {
               location.reload();
             }
-          }
+          },
+          customClass: 'updateMsg'
         });
         localStorage.setItem('ver', this.ver);
       }
@@ -59,5 +59,9 @@ export default {
 
 body {
   margin: 0;
+}
+
+.updateMsg {
+  white-space: pre-wrap;
 }
 </style>

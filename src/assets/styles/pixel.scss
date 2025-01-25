@@ -1,0 +1,44 @@
+.pixel-dialog {
+  .el-dialog {
+    border: 3px solid #000 !important;
+    box-shadow: 12px 12px 0 #000 !important;
+    background: #f0f0f0 !important;
+
+    &__header {
+      background: #f0f0f0 !important;
+      border-bottom: 2px solid #000 !important;
+      padding: 16px !important;
+    }
+
+    &__title {
+      display: flex !important;
+      align-items: center !important;
+
+      .icon-kanban {
+        width: 1.5rem !important; /* 保持原图标尺寸 */
+        height: 1.5rem !important; /* 添加!important防止覆盖 */
+        vertical-align: middle !important;
+      }
+    }
+  }
+}
+
+/* 像素按钮基础样式 */
+@mixin pixel-button {
+  border: 2px solid #000 !important;
+  box-shadow: 4px 4px 0 #000 !important;
+  transition: all 0.1s linear !important;
+  font-weight: bold !important;
+
+  &:active {
+    box-shadow: 2px 2px 0 #000 !important;
+    transform: translate(2px, 2px);
+  }
+
+  .iconfont {
+    /* 统一图标尺寸 */
+    width: 1.5rem !important;
+    height: 1.5rem !important;
+    vertical-align: middle;
+  }
+}

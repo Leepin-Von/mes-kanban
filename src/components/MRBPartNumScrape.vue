@@ -1,5 +1,6 @@
 <template>
-  <el-dialog title="componentName" :visible.sync="dialogFormVisible" :before-close="closeDialog" :append-to-body="true">
+  <el-dialog :class="['pixel-dialog']" title="componentName" :visible.sync="dialogFormVisible"
+    :before-close="closeDialog" :append-to-body="true">
     <div slot="title">
       <svg class="icon-kanban" aria-hidden="true">
         <use xlink:href="#icon-kanban"></use>
@@ -7,16 +8,30 @@
       <span>{{ componentId }} - {{ componentName }}</span>
     </div>
     <div class="form-container">
-      <el-form :model="form" :rules="rules" ref="form">
-        <el-form-item label="识别码" :label-width="formLabelWidth">
-          <el-input v-model="form.idStr" />
-        </el-form-item>
-        <el-form-item label="料号" :label-width="formLabelWidth" prop="partNum">
-          <el-input v-model="form.partNum"></el-input>
-        </el-form-item>
-        <el-form-item label="板序" :label-width="formLabelWidth">
-          <el-input v-model="form.revision"></el-input>
-        </el-form-item>
+      <el-form :model="form" :rules="rules" ref="form" :label-position="labelPosition">
+        <el-col :span="11">
+          <el-form-item label="识别码" :label-width="formLabelWidth">
+            <el-input v-model="form.idStr" />
+          </el-form-item>
+        </el-col>
+        <el-col :span="11">
+          <el-form-item label="报废含加权" :label-width="formLabelWidth">
+            <el-radio-group v-model="form.weighted">
+              <el-radio-button label="1">是</el-radio-button>
+              <el-radio-button label="0">否</el-radio-button>
+            </el-radio-group>
+          </el-form-item>
+        </el-col>
+        <el-col :span="11">
+          <el-form-item label="料号" :label-width="formLabelWidth" prop="partNum">
+            <el-input v-model="form.partNum"></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="11">
+          <el-form-item label="板序" label-width="40px">
+            <el-input style="width: 98%;" v-model="form.revision"></el-input>
+          </el-form-item>
+        </el-col>
         <el-form-item label="起讫日期" :label-width="formLabelWidth">
           <el-date-picker v-model="form.dateRange" type="daterange" range-separator="至" start-placeholder="开始日期"
             end-placeholder="结束日期" :picker-options="pickerOptions" format="yyyy年MM月dd日" value-format="yyyy-MM-dd">
@@ -28,15 +43,9 @@
             value-format="yyyy-MM-dd">
           </el-date-picker>
         </el-form-item>
-        <el-form-item label="报废含加权" :label-width="formLabelWidth">
-          <el-radio-group v-model="form.weighted">
-            <el-radio label="1">是</el-radio>
-            <el-radio label="0">否</el-radio>
-          </el-radio-group>
-        </el-form-item>
         <el-form-item>
           <el-button id="start-searching" type="primary" @click="startSearching">
-            <svg class="icon-search" aria-hidden="true">
+            <svg class="icon-search iconfont" aria-hidden="true">
               <use xlink:href="#icon-search"></use>
             </svg>
             开始查询
@@ -65,6 +74,7 @@ export default {
     return {
       dialogFormVisible: false, // 控制对话框的显示和隐藏
       formLabelWidth: "100px", // 表单标签的宽度
+      labelPosition: 'right', // 表单标签的位置
       /**
       * 表单数据，post请求的参数
       */
@@ -121,7 +131,20 @@ export default {
       },
     }
   },
+  mounted() {
+    // 监听窗口大小变化
+    window.addEventListener('resize', this.checkScreenSize);
+    // 初始化检查
+    this.checkScreenSize();
+  },
+  beforeDestroy() {
+    // 组件销毁时移除监听器
+    window.removeEventListener('resize', this.checkScreenSize);
+  },
   methods: {
+    checkScreenSize() {
+      this.labelPosition = window.innerWidth <= 1024 ? 'top' : 'right';
+    },
     /**
      * 开始查询
      */
@@ -204,52 +227,46 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.el-dialog {
-  width: clamp(550px, 28vw, 30vw) !important;
+::v-deep .el-dialog {
+  width: clamp(380px, 32vw, 35vw) !important;
+  margin-top: 8vh !important;
 
-  .icon-kanban {
-    width: 1.5rem;
-    height: 1.5rem;
-    vertical-align: middle;
+  &__body {
+    padding: 20px 20px;
   }
 
   .form-container {
-    background-color: #fff;
-    padding: 20px;
-    border: 2px solid #000;
-    box-shadow: 10px 10px 0 #000;
-    width: 90%;
-    margin: 0 auto;
 
-    .el-form-item__label {
-      font-size: 14px;
+    .el-form-item {
+
+      &__label {
+        font-weight: bold;
+      }
     }
 
-    .el-checkbox {
-      margin-right: 0;
+    .el-input__inner {
+      width: 80% !important;
     }
 
     #start-searching {
+      @include pixel-button;
+      background: #000;
+      color: #f0f0f0;
       width: 100%;
-      background-color: #000;
-      color: #fff;
-      border: 2px solid #000;
-      box-shadow: 4px 4px 0 #000;
-      display: block;
-      margin: 0 auto;
+      padding: 12px;
 
       &:hover {
-        background-color: #fff;
-        color: #000;
-      }
-
-      .icon-search {
-        width: 1.5rem;
-        height: 1.5rem;
-        margin-bottom: 0.2rem;
-        vertical-align: middle;
+        background: #f0f0f0 !important;
+        color: #000 !important;
       }
     }
+  }
+
+  .icon-kanban,
+  .icon-search {
+    width: 1.5rem;
+    height: 1.5rem;
+    vertical-align: middle;
   }
 }
 </style>

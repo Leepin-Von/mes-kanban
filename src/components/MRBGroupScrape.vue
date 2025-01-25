@@ -1,6 +1,6 @@
 <template>
-  <el-dialog title="componentName" :visible.sync="dialogFormVisible" :before-close="closeDialog"
-    :append-to-body="true">
+  <el-dialog :class="['pixel-dialog']" title="componentName" :visible.sync="dialogFormVisible"
+    :before-close="closeDialog" :append-to-body="true">
     <div slot="title">
       <svg class="icon-kanban" aria-hidden="true">
         <use xlink:href="#icon-kanban"></use>
@@ -8,7 +8,7 @@
       <span>{{ componentId }} - {{ componentName }}</span>
     </div>
     <div class="form-container">
-      <el-form :model="form">
+      <el-form :model="form" :label-position="labelPosition">
         <el-form-item label="课级单位" :label-width="formLabelWidth">
           <el-select v-model="form.superOrg" placeholder="课级单位" clearable @visible-change="orgListVisibleChange">
             <template slot="empty">
@@ -18,7 +18,7 @@
               <span style="float: left">{{ item.Name }}</span>
               <span style="float: right; color: #8492a6; font-size: 13px">{{
                 item.ID
-              }}</span>
+                }}</span>
             </el-option>
           </el-select>
         </el-form-item>
@@ -26,13 +26,13 @@
           <el-checkbox-group v-model="form.orgArray">
             <el-checkbox border v-for="option in orgList" :label="option.ID" :key="option.ID">{{
               option.Name
-            }}</el-checkbox>
+              }}</el-checkbox>
           </el-checkbox-group>
         </el-form-item>
         <el-form-item label="报废含加权" :label-width="formLabelWidth">
           <el-radio-group v-model="form.weighted">
-            <el-radio label="1">是</el-radio>
-            <el-radio label="0">否</el-radio>
+            <el-radio-button label="1">是</el-radio-button>
+            <el-radio-button label="0">否</el-radio-button>
           </el-radio-group>
         </el-form-item>
         <el-form-item label="起讫时间" :label-width="formLabelWidth">
@@ -48,7 +48,7 @@
         </el-form-item>
         <el-form-item>
           <el-button id="start-calculating" type="primary" @click="startCalculation">
-            <svg class="icon-calculator" aria-hidden="true">
+            <svg class="icon-calculator iconfont" aria-hidden="true">
               <use xlink:href="#icon-calculator"></use>
             </svg>
             开始计算
@@ -77,6 +77,7 @@ export default {
     return {
       dialogFormVisible: false, // 控制对话框的显示和隐藏
       formLabelWidth: "85px", // 表单标签的宽度
+      labelPosition: 'right', // 表单标签的位置
       /**
        * 表单数据，post请求的参数
        */
@@ -130,7 +131,20 @@ export default {
       },
     };
   },
+  mounted() {
+    // 监听窗口大小变化
+    window.addEventListener('resize', this.checkScreenSize);
+    // 初始化检查
+    this.checkScreenSize();
+  },
+  beforeDestroy() {
+    // 组件销毁时移除监听器
+    window.removeEventListener('resize', this.checkScreenSize);
+  },
   methods: {
+    checkScreenSize() {
+      this.labelPosition = window.innerWidth <= 1024 ? 'top' : 'right';
+    },
     /**
      * 开始计算
      */
@@ -290,50 +304,42 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.el-dialog {
-  width: clamp(550px, 30vw, 32vw) !important;
+::v-deep .el-dialog {
+  width: clamp(500px, 35vw, 38vw) !important;
+  margin-top: 8vh !important;
 
-  .icon-kanban {
-    width: 1.5rem;
-    height: 1.5rem;
-    vertical-align: middle;
+  &__body {
+    padding: 20px 20px;
   }
 
   .form-container {
-    background-color: #fff;
-    padding: 20px;
-    border: 2px solid #000;
-    box-shadow: 10px 10px 0 #000;
-    width: 90%;
-    margin: 0 auto;
 
-    .el-form-item__label {
-      font-size: 14px;
-    }
+    .el-form-item {
 
-    .el-checkbox {
-      margin-right: 0;
+      &__label {
+        font-weight: bold;
+      }
     }
   }
 
   #start-calculating {
+    @include pixel-button;
     width: 100%;
+    padding: 12px;
     background-color: #000;
-    color: #fff;
-    border: 2px solid #000;
-    box-shadow: 4px 4px 0 #000;
+    color: #f0f0f0;
 
     &:hover {
-      background-color: #fff;
+      background-color: #f0f0f0;
       color: #000;
     }
+  }
 
-    .icon-calculator {
-      width: 1.5rem;
-      height: 1.5rem;
-      margin-bottom: 0.2rem;
-      vertical-align: middle;
-    }
+  .icon-kanban,
+  .icon-calculator {
+    width: 1.5rem;
+    height: 1.5rem;
+    vertical-align: middle;
   }
 }
 </style>

@@ -144,6 +144,7 @@ export default {
     .icon {
       width: calc(1rem + 0.5vw);
       height: calc(1rem + 0.5vh);
+      vertical-align: middle;
       fill: currentColor;
       overflow: hidden;
     }
