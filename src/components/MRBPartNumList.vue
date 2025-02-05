@@ -9,19 +9,21 @@
     </div>
     <div class="form-container">
       <el-form :model="form" :label-position="labelPosition">
-        <el-col :span="11">
-          <el-form-item label="识别码" :label-width="formLabelWidth">
-            <el-input v-model="form.idStr" />
-          </el-form-item>
-        </el-col>
-        <el-col :span="11">
-          <el-form-item label="报废含加权" :label-width="formLabelWidth">
-            <el-radio-group v-model="form.weighted">
-              <el-radio-button label="1">是</el-radio-button>
-              <el-radio-button label="0">否</el-radio-button>
-            </el-radio-group>
-          </el-form-item>
-        </el-col>
+        <el-row>
+          <el-col :span="11">
+            <el-form-item label="识别码" :label-width="formLabelWidth">
+              <el-input v-model="form.idStr" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="11">
+            <el-form-item label="报废含加权" :label-width="formLabelWidth">
+              <el-radio-group v-model="form.weighted">
+                <el-radio-button label="1">是</el-radio-button>
+                <el-radio-button label="0">否</el-radio-button>
+              </el-radio-group>
+            </el-form-item>
+          </el-col>
+        </el-row>
         <el-form-item label="订单起讫日期" :label-width="formLabelWidth">
           <el-date-picker v-model="form.dateRange" type="daterange" range-separator="至" start-placeholder="订单开始日期"
             end-placeholder="订单结束日期" :picker-options="pickerOptions" format="yyyy年MM月dd日" value-format="yyyy-MM-dd">

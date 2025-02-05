@@ -13,7 +13,7 @@ export default {
     return {
       curVer: '',
       ver: PackageJson.version,
-      updateMessage: '祝各位蛇年大吉！新年快乐！\n【更新内容】\n  1. 页面细节优化\n  2. 部分页面美化'
+      updateMessage: '修复：54002及54003部分无法操作的问题'
     };
   },
   mounted() {
