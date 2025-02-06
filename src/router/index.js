@@ -11,9 +11,16 @@ const routes = [
     component: () => import("../views/SignInView.vue"),
   },
   {
-    path: "/kanban",
-    name: "kanban",
-    component: () => import("../views/KanbanView.vue"),
+    path: "/home",
+    name: "home",
+    component: () => import("../views/HomeView.vue"),
+    children: [
+      {
+        path: "kanban",
+        name: "modules-kanban",
+        component: () => import("../modules/MesKanban.vue"),
+      },
+    ],
   },
 ];
 
@@ -26,7 +33,7 @@ const router = new VueRouter({
 // 路由守卫
 router.beforeEach((to, from, next) => {
   if (to.path === "/") {
-    return next("/signIn");
+    return next("/home");
   }
   const token = localStorage.getItem("Authorization");
   const publicPages = ["/signIn"];
@@ -38,7 +45,7 @@ router.beforeEach((to, from, next) => {
     if (to.query.redirect) {
       return next(to.query.redirect); // 重定向到原始页面
     } else {
-      return next({ path: "/kanban" }); // 如果已经登录
+      return next({ path: "/home" }); // 如果已经登录
     }
   } else {
     return next();

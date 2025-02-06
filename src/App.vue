@@ -13,7 +13,7 @@ export default {
     return {
       curVer: '',
       ver: PackageJson.version,
-      updateMessage: '修复：54002及54003部分无法操作的问题'
+      updateMessage: '新增：模组选择'
     };
   },
   mounted() {

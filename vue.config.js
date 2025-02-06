@@ -2,7 +2,7 @@ const { defineConfig } = require("@vue/cli-service");
 
 module.exports = defineConfig({
   transpileDependencies: true,
-  productionSourceMap: false, // 隐藏源码
+  // productionSourceMap: false, // 隐藏源码
   devServer: {
     port: 8527, // 端口号
     proxy: {
@@ -27,7 +27,7 @@ module.exports = defineConfig({
   },
   chainWebpack: (config) => {
     config.plugin("html").tap((args) => {
-      args[0].title = "MES看板查询平台"; // 页面标题
+      args[0].title = "资服系统"; // 页面标题
       return args;
     });
   },
