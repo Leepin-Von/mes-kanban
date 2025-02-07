@@ -13,7 +13,10 @@ export default {
     return {
       curVer: '',
       ver: PackageJson.version,
-      updateMessage: '新增：模组选择'
+      updateMessage: `
+      新增：模组选择\r
+      新增：54003-MRB料号资料列表新增查询条件：客户代码
+      `
     };
   },
   mounted() {

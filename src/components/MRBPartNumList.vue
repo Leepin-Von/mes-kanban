@@ -41,6 +41,19 @@
               }}</el-checkbox>
           </el-checkbox-group>
         </el-form-item>
+        <el-form-item label="客户代码" :label-width="formLabelWidth">
+          <el-select v-model="form.cpnId" placeholder="客户代码" clearable @visible-change="customerListVisibleChange">
+            <template slot="empty">
+              <el-skeleton style="width: 100%; margin-top: 8px;" animated />
+            </template>
+            <el-option v-for="item in customers" :key="item.ID" :label="item.Name" :value="item.ID">
+              <span style="float: left">{{ item.Name }}</span>
+              <span style="float: right; color: #8492a6; font-size: 13px">{{
+                item.ID
+                }}</span>
+            </el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item>
           <el-button id="start-searching" type="primary" @click="startSearching">
             <svg class="icon-search iconfont" aria-hidden="true">
@@ -82,8 +95,10 @@ export default {
         issueMaterialsDateRange: [], // 发料日期范围
         partClassArray: [], // 产品类别
         weighted: "0", // 是否加权
+        cpnId: '', // 客户代码
       },
       prodClassOptions: [], // 产品类别选项
+      customers: [], // 客户代码选项
       pickerOptions: {
         shortcuts: [
           {
@@ -135,6 +150,16 @@ export default {
     window.removeEventListener('resize', this.checkScreenSize);
   },
   methods: {
+    initialFormData() {
+      return {
+        idStr: 'MRB01',
+        dateRange: [],
+        issueMaterialsDateRange: [],
+        partClassArray: [],
+        weighted: "0",
+        cpnId: '',
+      };
+    },
     checkScreenSize() {
       this.labelPosition = window.innerWidth <= 1024 ? 'top' : 'right';
     },
@@ -146,6 +171,7 @@ export default {
       this.closeDialog();
     },
     openDialog() {
+      this.initialFormData();
       this.getProdClass();
       this.dialogFormVisible = true;
     },
@@ -154,13 +180,7 @@ export default {
      */
     closeDialog() {
       this.dialogFormVisible = false;
-      this.form = {
-        idStr: 'MRB01',
-        dateRange: [],
-        issueMaterialsDateRange: [],
-        partClassArray: [],
-        weighted: "0",
-      }
+      this.initialFormData();
     },
     /**
      * 获取产品类别选项
@@ -188,6 +208,42 @@ export default {
         });
     },
     /**
+     * 获取客户代码选项
+     */
+    getCustomerList() {
+      const _this = this;
+      _this.postData.docType = "CustomerList";
+      post("/forward", _this.postData)
+        .then((res) => {
+          if (res.state === "OK") {
+            this.customers = res.data;
+          } else {
+            this.$notify.error({
+              title: "获取客户代码出错",
+              message: res.errMsg,
+            });
+          }
+        })
+        .catch((err) => {
+          this.$notify.error({
+            title: "获取客户代码出错",
+            message: err,
+          });
+        });
+    },
+    /**
+     * 客户代码下拉框显示/隐藏事件
+     * @param e 下拉框是否显示
+     */
+    customerListVisibleChange(e) {
+      if (e) {
+        // 下拉框显示
+        this.getCustomerList();
+      } else {
+        // 下拉框隐藏
+      }
+    },
+    /**
      * 提交表单数据
      */
     postFormData() {
@@ -202,6 +258,7 @@ export default {
         PartClassArray: _this.form.partClassArray.join(","),
         Weighted: _this.form.weighted,
         API: '1',
+        CpnId: _this.form.cpnId,
       };
       post("/forward", _this.postData)
         .then(res => {
