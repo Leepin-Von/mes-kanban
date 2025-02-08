@@ -1,40 +1,72 @@
-# MES 看板查询平台
+# 资服系统
 
 前端样式定调为像素风，灵感来源于 ERP。
 
-## 实现功能
+## 项目结构
 
-- [x] 登录校验
-- [x] 跨域代理
-- [x] MRB 制程群组报废资料查询
-- [x] 版本管理
+```
+mes-kanban/
+├── src/
+│   ├── components/         # 通用组件
+│   │   ├── CommonComponent.vue    # 看板通用容器组件
+│   │   ├── MRBGroupScrape.vue    # MRB制程群组报废查询组件
+│   │   ├── MRBPartNumList.vue    # MRB料号资料列表查询组件
+│   │   └── MRBPartNumScrape.vue  # MRB料号报废查询组件
+│   ├── http/
+│   │   └── api.js         # Axios 配置与请求封装
+│   ├── modules/
+│   │   └── MesKanban.vue  # 看板主模块
+│   ├── router/            # 路由配置
+│   ├── services/
+│   │   └── api.service.js # API 服务层
+│   ├── store/             # Vuex 状态管理
+│   └── views/             # 页面视图
+├── public/                # 静态资源
+└── package.json          # 项目配置
+```
+
+## 功能特性
+
+- 统一的像素风格UI设计
+- 响应式布局适配
+- 组件权限控制
+- 集中的API调用管理
+- 数据状态统一管理
+- 用户登录控制
+
+## 更新日志
+
+### 2025-02-08
+- 改进 API 服务缓存机制
+  - 缓存有效期与用户登录状态(token)绑定
+  - token 失效时自动清空缓存
+  - 点击刷新按钮时清空缓存
+  - 优化数据请求性能
+
+### 2025-02-07
+- 新增统一 API 服务管理
+  - 抽取重复的接口调用逻辑到公共服务
+  - 统一处理接口请求和错误
+  - 新增公共接口:
+    - getProdClass: 获取产品类别
+    - getCustomerList: 获取客户代码列表 
+    - getSuperOrgList: 获取课级单位列表
+    - getOrgList: 获取组级单位列表
+
+- 重构组件使用统一 API 服务
+  - 优化代码结构
+  - 提高可维护性
 
 ## 开发须知
 
 - 项目根目录下`package.json`文件中的`version`为项目版本号
-- 黄信忠主任所谓的“小程序”就是`src/components/`下的 vue 文件，这些 vue 作为动态组件，在`scr/views/modulesView.vue`中被引入
-  ```html
-  <el-row :gutter="24">
-    <el-col v-for="component in filteredComponents" :key="component.componentId" :span="6">
-      <div class="pixel-card">
-        <CommonComponent
-          :componentId="component.componentId"
-          :componentName="component.componentName"
-          @click="handleComponentClick(component)"
-        >
-          <component
-            :ref="component.name"
-            :is="component.name"
-            :componentId="component.componentId"
-            :componentName="component.componentName"
-          />
-        </CommonComponent>
-      </div>
-    </el-col>
-  </el-row>
-  ```
-- 本项目中使用的图标来自 iconfont，采用 symbol 样式
+- 组件开发规范：
+  - 所有功能组件统一放在 `src/components/` 目录下
+  - 组件使用 Vuex 进行状态管理
+  - 公共 API 调用统一使用 `services/api.service.js`
+  - 组件命名采用 PascalCase 格式
 
+- 本项目中使用的图标来自 iconfont，采用 symbol 样式
   - 目前已有的几个图标名分别是：
     1. `icon-calculator`
     2. `icon-signOut`
@@ -48,9 +80,9 @@
     10. `icon-no`
     11. `icon-yes`
     12. `icon-delete`
+    13. `icon-back`
 
   使用方式：
-
   ```html
   <svg aria-hidden="true">
     <!--icon-signIn为图标名称，可在`src/assets/iconfont/iconfont.js`中找到-->

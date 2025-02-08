@@ -56,12 +56,16 @@ function isTokenExpired(token) {
   try {
     const decoded = jwtDecode(token);
     const currentTime = Date.now() / 1000;
-    return decoded.exp < currentTime;
-  } catch (error) {
-    if (localStorage.getItem("Authorization") === token) {
+    if (decoded.exp < currentTime) {
       localStorage.removeItem("Authorization");
       localStorage.removeItem("Username");
+      return true;
+    } else {
+      return false;
     }
+  } catch (error) {
+    localStorage.removeItem("Authorization");
+    localStorage.removeItem("Username");
     return true; // 如果解析失败，认为 token 已过期
   }
 }

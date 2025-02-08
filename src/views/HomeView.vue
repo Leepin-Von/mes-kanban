@@ -64,6 +64,7 @@
 <script>
 import ModulesView from "./ModulesView.vue";
 import { mapState, mapActions } from "vuex";
+import apiService from '@/services/api.service';
 
 export default {
   name: "HomeView",
@@ -86,6 +87,7 @@ export default {
     refresh() {
       this.searchValue = "";
       this.filterComponents("");
+      apiService.clearCache(); // 清除API缓存
     },
     /**
      * 退出登录

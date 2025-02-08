@@ -61,6 +61,7 @@
 
 <script>
 import { post } from "@/http/api";
+import apiService from '@/services/api.service';
 
 export default {
   props: {
@@ -185,81 +186,69 @@ export default {
     /**
      * 获取课级单位列表
      */
-    getSuperOrgList() {
-      const _this = this;
-      _this.postData.docType = "PassSuperOrgList";
-      post("/forward", _this.postData)
-        .then((res) => {
-          if (res.state === "OK") {
-            this.superOrgList = res.data;
-          } else {
-            this.$notify.error({
-              title: "获取课级单位出错",
-              message: res.errMsg,
-            });
-          }
-        })
-        .catch((err) => {
+    async getSuperOrgList() {
+      try {
+        const res = await apiService.getSuperOrgList();
+        if (res.state === "OK") {
+          this.superOrgList = res.data;
+        } else {
           this.$notify.error({
             title: "获取课级单位出错",
-            message: err,
+            message: res.errMsg,
           });
+        }
+      } catch (err) {
+        this.$notify.error({
+          title: "获取课级单位出错",
+          message: err,
         });
+      }
     },
     /**
      * 获取组级单位列表
      */
-    getOrgList() {
-      const _this = this;
-      _this.postData.docType = "PassOrgList";
-      _this.postData.parameters = {
-        SuperOrgId: _this.form.superOrg,
-      };
-      if (_this.form.superOrg) {
-        post("/forward", _this.postData)
-          .then((res) => {
-            if (res.state === "OK") {
-              this.orgList = res.data;
-              this.form.orgArray = this.orgList.map(item => item.ID);
-            } else {
-              this.$notify.error({
-                title: "获取组级单位出错",
-                message: res.errMsg,
-              });
-            }
-          })
-          .catch((err) => {
+    async getOrgList() {
+      if (this.form.superOrg) {
+        try {
+          const res = await apiService.getOrgList(this.form.superOrg);
+          if (res.state === "OK") {
+            this.orgList = res.data;
+            this.form.orgArray = this.orgList.map(item => item.ID);
+          } else {
             this.$notify.error({
               title: "获取组级单位出错",
-              message: err,
+              message: res.errMsg,
             });
+          }
+        } catch (err) {
+          this.$notify.error({
+            title: "获取组级单位出错",
+            message: err,
           });
+        }
       }
     },
     /**
      * 获取产品类别选项
      */
-    getProdClass() {
-      const _this = this;
-      _this.postData.docType = "ProdClass";
-      post("/forward", _this.postData)
-        .then((res) => {
-          if (res.state === "OK") {
-            this.prodClassOptions = res.data;
-            this.form.partClassArray = this.prodClassOptions;
-          } else {
-            this.$notify.error({
-              title: "获取产品类别出错",
-              message: res.errMsg,
-            });
-          }
-        })
-        .catch((err) => {
+    async getProdClass() {
+      try {
+        const res = await apiService.getProdClass();
+        if (res.state === "OK") {
+          this.prodClassOptions = res.data;
+          this.form.partClassArray = this.prodClassOptions;
+        } else {
           this.$notify.error({
             title: "获取产品类别出错",
-            message: err,
+            message: res.errMsg,
           });
+        }
+      } catch (err) {
+        this.$notify.error({
+          title: "获取产品类别出错",
+          message: err,
         });
+      }
     },
     /**
      * 提交表单数据

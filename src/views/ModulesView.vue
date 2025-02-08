@@ -85,7 +85,7 @@ export default {
       }
 
       span {
-        font-size: 1.5rem;
+        font-size: calc(0.75rem + 0.5vw);
         font-weight: bold;
       }
     }

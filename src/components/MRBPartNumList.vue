@@ -69,6 +69,7 @@
 
 <script>
 import { post } from '@/http/api';
+import apiService from '@/services/api.service';
 
 export default {
   props: {
@@ -185,51 +186,46 @@ export default {
     /**
      * 获取产品类别选项
      */
-    getProdClass() {
-      const _this = this;
-      _this.postData.docType = "ProdClass";
-      post("/forward", _this.postData)
-        .then((res) => {
-          if (res.state === "OK") {
-            this.prodClassOptions = res.data;
-            this.form.partClassArray = this.prodClassOptions;
-          } else {
-            this.$notify.error({
-              title: "获取产品类别出错",
-              message: res.errMsg,
-            });
-          }
-        })
-        .catch((err) => {
+    async getProdClass() {
+      try {
+        const res = await apiService.getProdClass();
+        if (res.state === "OK") {
+          this.prodClassOptions = res.data;
+          this.form.partClassArray = this.prodClassOptions;
+        } else {
           this.$notify.error({
             title: "获取产品类别出错",
-            message: err,
+            message: res.errMsg,
           });
+        }
+      } catch (err) {
+        this.$notify.error({
+          title: "获取产品类别出错",
+          message: err,
         });
+      }
     },
+
     /**
      * 获取客户代码选项
      */
-    getCustomerList() {
-      const _this = this;
-      _this.postData.docType = "CustomerList";
-      post("/forward", _this.postData)
-        .then((res) => {
-          if (res.state === "OK") {
-            this.customers = res.data;
-          } else {
-            this.$notify.error({
-              title: "获取客户代码出错",
-              message: res.errMsg,
-            });
-          }
-        })
-        .catch((err) => {
+    async getCustomerList() {
+      try {
+        const res = await apiService.getCustomerList();
+        if (res.state === "OK") {
+          this.customers = res.data;
+        } else {
           this.$notify.error({
             title: "获取客户代码出错",
-            message: err,
+            message: res.errMsg,
           });
+        }
+      } catch (err) {
+        this.$notify.error({
+          title: "获取客户代码出错",
+          message: err,
         });
+      }
     },
     /**
      * 客户代码下拉框显示/隐藏事件

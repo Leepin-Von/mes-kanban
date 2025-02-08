@@ -14,8 +14,7 @@ export default {
       curVer: '',
       ver: PackageJson.version,
       updateMessage: `
-      新增：模组选择\r
-      新增：54003-MRB料号资料列表新增查询条件：客户代码
+      更新：进行了一些优化
       `
     };
   },
