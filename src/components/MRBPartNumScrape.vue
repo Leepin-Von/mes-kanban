@@ -25,12 +25,12 @@
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="11">
+          <el-col :span="14">
             <el-form-item label="料号" :label-width="formLabelWidth" prop="partNum">
               <el-input v-model="form.partNum"></el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="11">
+          <el-col :span="7">
             <el-form-item label="板序" label-width="40px">
               <el-input style="width: 98%;" v-model="form.revision"></el-input>
             </el-form-item>
