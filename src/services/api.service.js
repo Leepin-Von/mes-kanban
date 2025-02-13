@@ -36,23 +36,33 @@ const cacheManager = new CacheManager();
 
 export default {
   /**
-   * 获取产品类别(带缓存)
-   * @returns {Promise} 返回产品类别数据
+   * 通用的缓存数据获取方法
+   * @param {string} cacheKey 缓存键
+   * @param {string} docType 文档类型
+   * @param {Object} parameters 请求参数
+   * @returns {Promise} 返回请求数据
    */
-  async getProdClass() {
-    const cacheKey = 'ProdClass';
+  async getCachedData(cacheKey, docType, parameters = {}) {
     const cachedData = cacheManager.get(cacheKey);
     if (cachedData) return cachedData;
 
     const postData = {
-      docType: "ProdClass",
-      parameters: {}
+      docType,
+      parameters
     };
     const result = await post("/forward", postData);
     if (result.state === "OK") {
       cacheManager.set(cacheKey, result);
     }
     return result;
+  },
+
+  /**
+   * 获取产品类别(带缓存)
+   * @returns {Promise} 返回产品类别数据
+   */
+  async getProdClass() {
+    return this.getCachedData('ProdClass', 'ProdClass');
   },
 
   /**
@@ -60,19 +70,7 @@ export default {
    * @returns {Promise} 返回客户代码列表数据
    */
   async getCustomerList() {
-    const cacheKey = 'CustomerList';
-    const cachedData = cacheManager.get(cacheKey);
-    if (cachedData) return cachedData;
-
-    const postData = {
-      docType: "CustomerList",
-      parameters: {}
-    };
-    const result = await post("/forward", postData);
-    if (result.state === "OK") {
-      cacheManager.set(cacheKey, result);
-    }
-    return result;
+    return this.getCachedData('CustomerList', 'CustomerList');
   },
 
   /**
@@ -80,19 +78,7 @@ export default {
    * @returns {Promise} 返回课级单位列表数据
    */
   async getSuperOrgList() {
-    const cacheKey = 'SuperOrgList';
-    const cachedData = cacheManager.get(cacheKey);
-    if (cachedData) return cachedData;
-
-    const postData = {
-      docType: "PassSuperOrgList",
-      parameters: {}
-    };
-    const result = await post("/forward", postData);
-    if (result.state === "OK") {
-      cacheManager.set(cacheKey, result);
-    }
-    return result;
+    return this.getCachedData('SuperOrgList', 'PassSuperOrgList');
   },
 
   /**
@@ -101,21 +87,11 @@ export default {
    * @returns {Promise} 返回组级单位列表数据
    */
   async getOrgList(superOrgId) {
-    const cacheKey = `OrgList_${superOrgId}`;
-    const cachedData = cacheManager.get(cacheKey);
-    if (cachedData) return cachedData;
-
-    const postData = {
-      docType: "PassOrgList",
-      parameters: {
-        SuperOrgId: superOrgId
-      }
-    };
-    const result = await post("/forward", postData);
-    if (result.state === "OK") {
-      cacheManager.set(cacheKey, result);
-    }
-    return result;
+    return this.getCachedData(
+      `OrgList_${superOrgId}`, 
+      'PassOrgList',
+      { SuperOrgId: superOrgId }
+    );
   },
 
   // 清除所有缓存
