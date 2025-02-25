@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "33576950",
+      "name": "积木报表",
+      "font_class": "jmreport",
+      "unicode": "e63c",
+      "unicode_decimal": 58940
+    },
+    {
       "icon_id": "4729619",
       "name": "返回",
       "font_class": "back",

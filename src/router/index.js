@@ -20,6 +20,16 @@ const routes = [
         name: "modules-kanban",
         component: () => import("../modules/MesKanban.vue"),
       },
+      {
+        path: "jmreport",
+        name: "jmreport",
+        component: () => import("../modules/JimuReport.vue"),
+      },
+      {
+        path: "drag",
+        name: "jmbi",
+        component: () => import("../modules/JimuBI.vue"),
+      }
     ],
   },
 ];

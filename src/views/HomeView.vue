@@ -1,12 +1,16 @@
 <template>
   <div class="home">
-    <div class="navbar">
+    <div
+      v-if="
+        this.$router.currentRoute.path !== '/home/jmreport' &&
+        this.$router.currentRoute.path !== '/home/drag'
+      "
+      class="navbar"
+    >
       <svg
         class="icon-search"
         aria-hidden="true"
-        v-show="
-          this.$router.currentRoute.path !== '/home'
-        "
+        v-show="this.$router.currentRoute.path !== '/home'"
       >
         <use xlink:href="#icon-search"></use>
       </svg>
@@ -15,9 +19,7 @@
         effect="dark"
         content="输入 功能代码 或 功能名称 后回车，即可查询"
         placement="bottom"
-        v-show="
-          this.$router.currentRoute.path !== '/home'
-        "
+        v-show="this.$router.currentRoute.path !== '/home'"
       >
         <input
           type="text"
@@ -32,9 +34,7 @@
         effect="dark"
         content="刷新"
         placement="bottom"
-        v-show="
-          this.$router.currentRoute.path !== '/home'
-        "
+        v-show="this.$router.currentRoute.path !== '/home'"
       >
         <div id="refresh" @click="refresh">
           <svg class="icon-refresh" aria-hidden="true">
@@ -55,7 +55,12 @@
         </div>
       </el-tooltip>
     </div>
-    <br />
+    <br
+      v-if="
+        this.$router.currentRoute.path !== '/home/jmreport' &&
+        this.$router.currentRoute.path !== '/home/drag'
+      "
+    />
     <modules-view v-if="this.$router.currentRoute.path === '/home'" />
     <router-view />
   </div>
@@ -64,7 +69,7 @@
 <script>
 import ModulesView from "./ModulesView.vue";
 import { mapState, mapActions } from "vuex";
-import apiService from '@/services/api.service';
+import apiService from "@/services/api.service";
 
 export default {
   name: "HomeView",
@@ -80,7 +85,7 @@ export default {
     ...mapState("components", ["components", "filteredComponents"]),
   },
   methods: {
-    ...mapActions('components', ['filterComponents']),
+    ...mapActions("components", ["filterComponents"]),
     /**
      * 刷新
      */

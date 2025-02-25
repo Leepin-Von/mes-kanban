@@ -1,10 +1,15 @@
 <template>
   <div class="outter">
     <div class="modules_container">
-      <router-link v-for="module in modules" :key="module.name" :to="`/home/${module.url}`" class="modules">
+      <router-link
+        v-for="module in modules"
+        :key="module.name"
+        :to="`/home/${module.url}`"
+        class="modules"
+      >
         <svg class="module-icon" aria-hidden="true">
-          <use :xlink:href="module.iconName"></use>
-        </svg>&nbsp;
+          <use :xlink:href="module.iconName"></use></svg
+        >&nbsp;
         <span>{{ module.moduleName }}</span>
       </router-link>
     </div>
@@ -21,21 +26,31 @@ export default {
           iconName: "#icon-kanban",
           moduleName: "MES看板查询",
           url: "kanban",
-        }
-      ]
-    }
+        },
+        {
+          iconName: "#icon-jmreport",
+          moduleName: "积木报表",
+          url: "jmreport",
+        },
+        {
+          iconName: "#icon-jmreport",
+          moduleName: "积木BI",
+          url: "drag",
+        },
+      ],
+    };
   },
   methods: {
     /**
      * 退出登录
      */
     handleAvatarClick() {
-      localStorage.removeItem('Authorization')
-      localStorage.removeItem('Username')
-      this.$router.push('/signIn')
+      localStorage.removeItem("Authorization");
+      localStorage.removeItem("Username");
+      this.$router.push("/signIn");
     },
-  }
-}
+  },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -89,6 +104,26 @@ export default {
         font-weight: bold;
       }
     }
+
+    .pixel-select {
+      appearance: none;
+      background-color: #fff;
+      border: 2px solid #000;
+      box-shadow: 3px 3px 0 #000;
+      padding: 5px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      font-size: calc(0.75rem + 0.5vw);
+      font-weight: bold;
+      width: 100%;
+      box-sizing: border-box;
+
+      &:focus {
+        outline: none;
+        border-color: #00f;
+      }
+    }
   }
 }
 </style>
+

@@ -8,7 +8,7 @@ module.exports = defineConfig({
     proxy: {
       "/api": {
         // 代理的路径前缀（axios 的默认基础 URL），所有以 `/api` 开头的路径都会被代理到目标服务器
-        target: "http://10.2.85.19:8528", // 代理的目标服务器地址
+        target: "http://localhost:8528", // 代理的目标服务器地址
         changeOrigin: true, // 是否更改请求的源头（Origin）为代理的目标服务器地址
         pathRewrite: { "^/api": "/api" }, // 路径重写：/api/signIn -> http://localhost:8528/api/signIn
       },
