@@ -27,6 +27,7 @@ export default {
           moduleName: "MES看板查询",
           url: "kanban",
         },
+        /* 2025-03-04 系统版本0.1.10 这两个暂时不更新
         {
           iconName: "#icon-jmreport",
           moduleName: "积木报表",
@@ -37,6 +38,7 @@ export default {
           moduleName: "积木BI",
           url: "drag",
         },
+        */
       ],
     };
   },

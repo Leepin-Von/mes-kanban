@@ -30,6 +30,7 @@ import CommonComponent from "@/components/CommonComponent.vue";
 import MRBGroupScrap from "@/components/MRBGroupScrape.vue";
 import MRBPartNumScrap from "@/components/MRBPartNumScrape.vue";
 import MRBPartNumList from "@/components/MRBPartNumList.vue";
+import MRBProdClass from "@/components/MRBProdClass.vue";
 import { mapState } from "vuex";
 
 export default {
@@ -40,6 +41,7 @@ export default {
     MRBGroupScrap,
     MRBPartNumScrap,
     MRBPartNumList,
+    MRBProdClass,
   },
   computed: {
     ...mapState("components", ["filteredComponents"]),

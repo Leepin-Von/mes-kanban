@@ -15,6 +15,11 @@ const state = {
       componentId: 54003,
       componentName: 'MRB料号资料列表查询'
     },
+    {
+      name: 'MRBProdClass',
+      componentId: 54004,
+      componentName: 'MRB产品类别报废查询'
+    }
   ],
   filteredComponents: []
 }

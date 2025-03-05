@@ -22,7 +22,7 @@ export default {
       curVer: "",
       ver: PackageJson.version,
       updateMessage: `
-      更新：进行了一些优化
+      新增：MRB产品类别报废查询
       `,
     };
   },
