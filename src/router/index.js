@@ -29,8 +29,13 @@ const routes = [
         path: "drag",
         name: "jmbi",
         component: () => import("../modules/JimuBI.vue"),
-      }
+      },
     ],
+  },
+  {
+    path: "/editor",
+    name: "editor",
+    component: () => import("../views/QuillTestView.vue"),
   },
 ];
 
