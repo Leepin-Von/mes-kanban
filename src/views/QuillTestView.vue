@@ -6,13 +6,9 @@
         ><editor-component
           ref="editor"
           @text-change="handleTextChange"
-          @selection-change="handleSelectionChange"
         ></editor-component
       ></el-form-item>
     </el-form>
-    <br />
-    <p>{{ form.comment || "Empty" }}</p>
-    <p>{{ range || "Empty" }}</p>
   </div>
 </template>
 
@@ -31,13 +27,8 @@ export default {
     };
   },
   methods: {
-    handleTextChange(delta) {
+    handleTextChange() {
       this.form.comment = this.$refs.editor.getContents();
-      console.log(delta[0].ops);
-      console.log(delta[1].ops);
-    },
-    handleSelectionChange(newRange) {
-      this.range = newRange;
     },
   },
 };
