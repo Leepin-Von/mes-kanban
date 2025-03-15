@@ -3,7 +3,7 @@
     <h2 style="text-align: center; font-size: calc(1rem + 1vw);">登&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;录</h2>
     <el-form :model="loginForm" @submit.native.prevent="handleLogin" @keyup.enter.native="handleLogin">
       <el-form-item label="用户名">
-        <el-input v-model="loginForm.username" autocomplete="off">
+        <el-input v-model="loginForm.username" autocomplete="off" @input="loginForm.username = loginForm.username.toUpperCase()">
           <template slot="prefix">
             <svg class="icon" aria-hidden="true">
               <use xlink:href="#icon-user"></use>
@@ -59,7 +59,6 @@ export default {
         this.$message.error("用户名或密码不能为空");
         return;
       }
-      this.loginForm.username = this.loginForm.username.toUpperCase(); // 用户名转大写后再post
       post("/signIn", this.loginForm).then((res) => {
         if (res.code === 200) {
           this.userToken = res.data;
