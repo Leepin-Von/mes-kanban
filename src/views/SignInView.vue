@@ -1,9 +1,19 @@
 <template>
   <div class="login-container">
-    <h2 style="text-align: center; font-size: calc(1rem + 1vw);">登&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;录</h2>
-    <el-form :model="loginForm" @submit.native.prevent="handleLogin" @keyup.enter.native="handleLogin">
+    <h2 style="text-align: center; font-size: calc(1rem + 1vw)">
+      登&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;录
+    </h2>
+    <el-form
+      :model="loginForm"
+      @submit.native.prevent="handleLogin"
+      @keyup.enter.native="handleLogin"
+    >
       <el-form-item label="用户名">
-        <el-input v-model="loginForm.username" autocomplete="off" @input="loginForm.username = $event.toUpperCase()">
+        <el-input
+          v-model="loginForm.username"
+          autocomplete="off"
+          @input="loginForm.username = $event.toUpperCase()"
+        >
           <template slot="prefix">
             <svg class="icon" aria-hidden="true">
               <use xlink:href="#icon-user"></use>
@@ -12,7 +22,11 @@
         </el-input>
       </el-form-item>
       <el-form-item label="密码">
-        <el-input type="password" v-model="loginForm.password" autocomplete="off">
+        <el-input
+          type="password"
+          v-model="loginForm.password"
+          autocomplete="off"
+        >
           <template slot="prefix">
             <svg class="icon" aria-hidden="true">
               <use xlink:href="#icon-lock"></use>
@@ -53,33 +67,34 @@ export default {
      * 登录
      */
     handleLogin() {
-      localStorage.removeItem('Authorization')
-      localStorage.removeItem('Username')
+      localStorage.removeItem("Authorization");
+      localStorage.removeItem("Username");
       if (!this.loginForm.username || !this.loginForm.password) {
         this.$message.error("用户名或密码不能为空");
         return;
       }
-      // this.loginForm.username = this.loginForm.username.toUpperCase(); // 用户名转大写后再post
-      post("/signIn", this.loginForm).then((res) => {
-        if (res.code === 200) {
-          this.userToken = res.data;
-          this.changeLogin({ Authorization: this.userToken });
-          localStorage.setItem('Username', this.loginForm.username);
-          if (this.$router.currentRoute.path !== "/home") {
-            this.$router.push("/home");
+      post("/signIn", this.loginForm)
+        .then((res) => {
+          if (res.code === 200) {
+            this.userToken = res.data;
+            this.changeLogin({ Authorization: this.userToken });
+            localStorage.setItem("Username", this.loginForm.username);
+            if (this.$router.currentRoute.path !== "/home") {
+              this.$router.push("/home");
+            }
+          } else {
+            this.$notify.error({
+              title: "登录失败",
+              message: res.message,
+            });
           }
-        } else {
+        })
+        .catch((err) => {
           this.$notify.error({
             title: "登录失败",
-            message: res.message
-          })
-        }
-      }).catch(err => {
-        this.$notify.error({
-          title: "登录失败",
-          message: err
-        })
-      })
+            message: err,
+          });
+        });
     },
   },
 };

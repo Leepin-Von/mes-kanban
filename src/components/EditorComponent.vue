@@ -56,7 +56,7 @@ export default {
   methods: {
     getContents() {
       const text = this.quill?.getText();
-      const html = this.quill?.getSemanticHTML(0, 99999999999999);
+      const html = this.quill?.root.innerHTML;
       return { text, html };
     },
   },
@@ -66,6 +66,7 @@ export default {
 <style lang="scss" scoped>
 .editor {
   width: 98%;
+  background-color: #fff;
   border: 2px solid #000;
   background-color: #fff;
   box-shadow: 4px 4px 0 #000;
