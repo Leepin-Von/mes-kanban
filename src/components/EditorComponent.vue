@@ -56,7 +56,7 @@ export default {
   methods: {
     getContents() {
       const text = this.quill?.getText();
-      const html = this.quill?.root.innerHTML;
+      const html = this.quill?.getSemanticHTML(0, 99999999999999);
       return { text, html };
     },
   },
