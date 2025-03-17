@@ -11,7 +11,7 @@ import "quill/dist/quill.snow.css"; // 引入富文本编辑器的css样式
 
 export default {
   name: "EditorComponent",
-  emits: ["text-change", "selection-change"],
+  emits: ["text-change"],
   expose: ["getContents"],
   data() {
     return {
@@ -46,9 +46,6 @@ export default {
     this.quill.on(Quill.events.TEXT_CHANGE, (...args) => {
       this.$emit("text-change", args);
     });
-    this.quill.on(Quill.events.SELECTION_CHANGE, (...args) => {
-      this.$emit("selection-change", ...args);
-    });
   },
   beforeUnmount() {
     if (this.quill) {
@@ -70,6 +67,7 @@ export default {
 .editor {
   width: 98%;
   border: 2px solid #000;
+  background-color: #fff;
   box-shadow: 4px 4px 0 #000;
 }
 </style>
