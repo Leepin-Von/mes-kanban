@@ -62,3 +62,12 @@ export async function post(url, param = {}) {
   const res = await axios.post(url, param);
   return res.data;
 }
+
+export async function postFile(url, param = {}) {
+  const res = await axios.post(url, param, {
+    headers: {
+      "Content-Type": "multipart/form-data"
+    },
+  });
+  return res.data;
+}

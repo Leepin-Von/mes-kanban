@@ -37,6 +37,11 @@ const routes = [
     name: "editor",
     component: () => import("../views/QuillTestView.vue"),
   },
+  {
+    path: "/upload",
+    name: "upload",
+    component: () => import("../views/UploadTestView.vue"),
+  },
 ];
 
 const router = new VueRouter({
