@@ -3,6 +3,7 @@
     class="upload-demo"
     action
     accept=".jpg,.jpeg,.png,.doc,.docx,.xls,.xlsx,.txt,.pdf"
+    :show-file-list="false"
     :before-upload="beforeUpload"
     :on-remove="handleRemove"
     :on-change="handleChange"
@@ -95,6 +96,7 @@ export default {
       const _this = this;
       const formData = new FormData();
       formData.append("file", _this.file.raw);
+      formData.append("uploader", localStorage.getItem("Username"))
       postFile("/minio/upload", formData)
         .then((res) => {
           if (res.code === 200) {
