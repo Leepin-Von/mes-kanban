@@ -30,15 +30,20 @@ export default {
         /* 2025-03-04 系统版本0.1.10 这两个暂时不更新
         {
           iconName: "#icon-jmreport",
-          moduleName: "积木报表",
+          moduleName: "报表设定",
           url: "jmreport",
         },
         {
           iconName: "#icon-jmreport",
-          moduleName: "积木BI",
+          moduleName: "大屏看板",
           url: "drag",
         },
         */
+        {
+          iconName: "#icon-erp",
+          moduleName: "ERP",
+          url: "erp",
+        }
       ],
     };
   },

@@ -30,6 +30,18 @@ const routes = [
         name: "jmbi",
         component: () => import("../modules/JimuBI.vue"),
       },
+      {
+        path: "erp",
+        name: "erp",
+        component: () => import("../modules/ERP.vue"),
+        children: [
+          {
+            path: "reset",
+            name: "reset-user-pwd",
+            component: () => import("../components/erp/ResetUserPwdComponent.vue")
+          },
+        ]
+      },
     ],
   },
   {
@@ -56,7 +68,7 @@ router.beforeEach((to, from, next) => {
     return next("/home");
   }
   const token = localStorage.getItem("Authorization");
-  const publicPages = ["/signIn"];
+  const publicPages = ["/signIn", "/home/erp/reset"];
   const authRequired = !publicPages.includes(to.path);
 
   if (authRequired && (!token || isTokenExpired(token))) {

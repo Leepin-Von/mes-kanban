@@ -35,12 +35,28 @@
         </el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="handleLogin">
-          <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-signIn"></use>
-          </svg>
-          登 录
-        </el-button>
+        <div class="btn-container">
+          <el-button
+            class="basicBtn loginBtn"
+            type="primary"
+            @click="handleLogin"
+          >
+            <svg class="icon" aria-hidden="true">
+              <use xlink:href="#icon-signIn"></use>
+            </svg>
+            登&nbsp;&nbsp;&nbsp;&nbsp;录
+          </el-button>
+          <el-button
+            class="basicBtn resetBtn"
+            type="primary"
+            @click="handleForgetPwd"
+          >
+            <svg class="icon" aria-hidden="true">
+              <use xlink:href="#icon-resetPwd"></use>
+            </svg>
+            忘记密码
+          </el-button>
+        </div>
       </el-form-item>
     </el-form>
   </div>
@@ -70,7 +86,10 @@ export default {
       localStorage.removeItem("Authorization");
       localStorage.removeItem("Username");
       if (!this.loginForm.username || !this.loginForm.password) {
-        this.$message.error("用户名或密码不能为空");
+        this.$notify.error({
+          message: "用户名或密码不能为空",
+          title: "提示",
+        });
         return;
       }
       post("/signIn", this.loginForm)
@@ -95,6 +114,19 @@ export default {
             message: err,
           });
         });
+    },
+    handleForgetPwd() {
+      if (this.loginForm.username === "") {
+        this.$notify.error({
+          title: "错误",
+          message: "用户名不能为空",
+        });
+        return;
+      } else {
+        localStorage.setItem("Username", this.loginForm.username);
+        localStorage.setItem("Authorization", "reset");
+        this.$router.push("/home/erp/reset");
+      }
     },
   },
 };
@@ -140,28 +172,37 @@ export default {
     font-size: calc(0.8rem + 0.5vw);
   }
 
-  .el-button {
+  .btn-container {
     width: 100%;
-    background-color: #000;
-    color: #fff;
-    border: 2px solid #000;
-    box-shadow: 4px 4px 0 #000;
-    font-size: calc(0.75rem + 0.3vw);
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    justify-content: center;
-
-    &:hover {
+    .basicBtn {
+      width: 33.33%;
       background-color: #fff;
       color: #000;
-    }
+      border: 2px solid #000;
+      box-shadow: 4px 4px 0 #000;
+      font-size: calc(0.75rem + 0.3vw);
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
-    .icon {
-      width: calc(1rem + 0.5vw);
-      height: calc(1rem + 0.5vh);
-      vertical-align: middle;
-      fill: currentColor;
-      overflow: hidden;
+      &:hover {
+        transform: scale(0.98);
+      }
+
+      .icon {
+        width: calc(1rem + 0.5vw);
+        height: calc(1rem + 0.5vh);
+        vertical-align: middle;
+        fill: currentColor;
+        overflow: hidden;
+      }
+    }
+    .resetBtn {
+      background-color: lightgray;
+      color: #000;
     }
   }
 }

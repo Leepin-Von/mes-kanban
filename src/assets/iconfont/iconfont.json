@@ -6,6 +6,20 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "3956108",
+      "name": "ERP",
+      "font_class": "erp",
+      "unicode": "e649",
+      "unicode_decimal": 58953
+    },
+    {
+      "icon_id": "13478689",
+      "name": "重置密码",
+      "font_class": "resetPwd",
+      "unicode": "e6e8",
+      "unicode_decimal": 59112
+    },
+    {
       "icon_id": "33576950",
       "name": "积木报表",
       "font_class": "jmreport",
@@ -29,7 +43,7 @@
     {
       "icon_id": "43197853",
       "name": "MRB",
-      "font_class": "MRBGroupScrape",
+      "font_class": "mrb",
       "unicode": "e602",
       "unicode_decimal": 58882
     },

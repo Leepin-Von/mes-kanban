@@ -78,17 +78,26 @@ export default {
         "pdf",
       ];
       if (!whiteList.includes(fileType)) {
-        this.$message.error("上传文件格式不正确");
+        this.$notify.error({
+          message: "上传文件格式不正确",
+          title: "提示",
+        });
         return false;
       }
       const pdfSizeLimit = file.size / 1024 / 1024 < 50;
       if (!pdfSizeLimit && fileType === "pdf") {
-        this.$message.error("上传的PDF文件大小不能超过50MB");
+        this.$notify.error({
+          message: "上传的PDF文件大小不能超过50MB",
+          title: "提示",
+        });
         return false;
       }
       const otherSizeLimit = file.size / 1024 / 1024 < 5;
       if (!otherSizeLimit) {
-        this.$message.error("上传文件大小不能超过5M");
+        this.$notify.error({
+          message: "上传文件大小不能超过5M",
+          title: "提示",
+        });
         return false;
       }
     },

@@ -3,7 +3,7 @@
     <div class="components-container">
       <div
         class="pixel-card"
-        v-for="component in filteredComponents"
+        v-for="component in kanbanFilteredComponents"
         :key="component.componentId"
       >
         <CommonComponent
@@ -27,14 +27,14 @@
 import { post } from "@/http/api";
 import CommonComponent from "@/components/CommonComponent.vue";
 // “小程序”导入
-import MRBGroupScrap from "@/components/MRBGroupScrape.vue";
-import MRBPartNumScrap from "@/components/MRBPartNumScrape.vue";
-import MRBPartNumList from "@/components/MRBPartNumList.vue";
-import MRBProdClass from "@/components/MRBProdClass.vue";
+import MRBGroupScrap from "@/components/kanban/MRBGroupScrape.vue";
+import MRBPartNumScrap from "@/components/kanban/MRBPartNumScrape.vue";
+import MRBPartNumList from "@/components/kanban/MRBPartNumList.vue";
+import MRBProdClass from "@/components/kanban/MRBProdClass.vue";
 import { mapState } from "vuex";
 
 export default {
-  name: "MesKanban",
+  name: "MesKanban-module",
   components: {
     CommonComponent,
     // “小程序”注册
@@ -44,10 +44,10 @@ export default {
     MRBProdClass,
   },
   computed: {
-    ...mapState("components", ["filteredComponents"]),
+    ...mapState("components", ["kanbanFilteredComponents"]),
   },
   mounted() {
-    this.$store.dispatch("components/initFilteredComponents");
+    this.$store.dispatch("components/initKanbanFilteredComponents");
   },
   methods: {
     /**

@@ -82,7 +82,12 @@ export default {
     };
   },
   computed: {
-    ...mapState("components", ["components", "filteredComponents"]),
+    ...mapState("components", [
+      "kanbanComponents",
+      "kanbanFilteredComponents",
+      "erpComponents",
+      "erpFilteredComponents",
+    ]),
   },
   methods: {
     ...mapActions("components", ["filterComponents"]),
@@ -91,7 +96,10 @@ export default {
      */
     refresh() {
       this.searchValue = "";
-      this.filterComponents("");
+      this.filterComponents({
+        routePath: this.$router.currentRoute.path,
+        searchValue: "",
+      });
       apiService.clearCache(); // 清除API缓存
     },
     /**
@@ -108,11 +116,12 @@ export default {
     searchComponents(e) {
       e = e || window.event;
       const value = this.searchValue.trim();
+      const routePath = this.$router.currentRoute.path;
       if (e.keyCode == 13 && value) {
-        this.filterComponents(value);
+        this.filterComponents({ routePath, searchValue: value });
         this.searchValue = "";
       } else {
-        this.filterComponents("");
+        this.filterComponents({ routePath, searchValue: "" });
         this.searchValue = "";
       }
     },

@@ -207,9 +207,9 @@ export default {
         .then(res => {
           this.$showLoading().close();
           if (res.state === "OK") {
-            this.$message({
+            this.$notify.success({
               message: "查询成功",
-              type: "success",
+              title: "提示",
             });
           } else {
             this.$notify.error({

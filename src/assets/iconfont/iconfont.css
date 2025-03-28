@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 4807804 */
-  src: url('iconfont.woff2?t=1740358762590') format('woff2'),
-       url('iconfont.woff?t=1740358762590') format('woff'),
-       url('iconfont.ttf?t=1740358762590') format('truetype');
+  src: url('iconfont.woff2?t=1743047875635') format('woff2'),
+       url('iconfont.woff?t=1743047875635') format('woff'),
+       url('iconfont.ttf?t=1743047875635') format('truetype');
 }
 
 .iconfont {
@@ -11,6 +11,14 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-erp:before {
+  content: "\e649";
+}
+
+.icon-resetPwd:before {
+  content: "\e6e8";
 }
 
 .icon-jmreport:before {
@@ -25,7 +33,7 @@
   content: "\e654";
 }
 
-.icon-MRBGroupScrape:before {
+.icon-mrb:before {
   content: "\e602";
 }
 
