@@ -30,7 +30,11 @@
             autocomplete="off"
           ></el-input>
         </el-form-item>
-        <el-form-item label="新密码" prop="newPwd" :label-width="formLabelWidth">
+        <el-form-item
+          label="新密码"
+          prop="newPwd"
+          :label-width="formLabelWidth"
+        >
           <el-input
             type="password"
             v-model="ruleForm.newPwd"

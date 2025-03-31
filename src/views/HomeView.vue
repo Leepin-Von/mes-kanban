@@ -45,7 +45,7 @@
       <el-tooltip
         class="item"
         effect="dark"
-        content="退出登录"
+        :content="toolTipContent"
         placement="bottom"
       >
         <div id="avatar" @click="handleAvatarClick">
@@ -79,6 +79,9 @@ export default {
   data() {
     return {
       searchValue: "",
+      toolTipContent: localStorage.getItem("Authorization") !== "reset"
+        ? "退出登录"
+        : "前往登录",
     };
   },
   computed: {

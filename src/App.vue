@@ -22,7 +22,7 @@ export default {
       curVer: "",
       ver: PackageJson.version,
       updateMessage: `
-      新增：MRB产品类别报废查询
+      新增：使用者密码重置与变更
       `,
     };
   },

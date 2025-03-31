@@ -115,10 +115,11 @@ export default {
             title: "提示",
           });
         } else {
-          this.$notify.error({
-            message: "复制失败",
-            title: "提示",
-          });
+          this.$confirm(`复制失败，请手动复制【${text}】`, "提示", {
+            confirmButtonText: "确定",
+            showCancelButton: false,
+            type: "warning", 
+          })
         }
       } catch (err) {
         this.$notify.error({
@@ -141,10 +142,7 @@ export default {
           });
         },
         () => {
-          this.$notify.error({
-            message: "复制失败",
-            title: "提示",
-          });
+          this.copyFallback(newPwd);
         }
       );
     },

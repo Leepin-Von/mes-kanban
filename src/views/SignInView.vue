@@ -190,6 +190,7 @@ export default {
 
       &:hover {
         transform: scale(0.98);
+        background-color: #fff;
       }
 
       .icon {
