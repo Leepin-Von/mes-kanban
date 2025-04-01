@@ -217,16 +217,16 @@ export default {
     postFormData() {
       const _this = this;
       const { code1, code2 } = encode(_this.ruleForm.newPwd);
-      (_this.postData.docType = "UserChgPwd"),
-        (_this.postData.parameters = {
-          UserId: localStorage.getItem("Username"),
-          PWD: _this.ruleForm.originalPwd,
-          Code1: code1,
-          Code2: code2,
-          ReasonType: _this.ruleForm.reasonType,
-          Reason: _this.ruleForm.reason,
-          API: "1",
-        });
+      _this.postData.docType = "UserChgPwd";
+      _this.postData.parameters = {
+        UserId: localStorage.getItem("Username"),
+        PWD: _this.ruleForm.originalPwd,
+        Code1: code1,
+        Code2: code2,
+        ReasonType: _this.ruleForm.reasonType,
+        Reason: _this.ruleForm.reason,
+        API: "1",
+      };
       post("/user_chg_pwd", _this.postData)
         .then((res) => {
           if (res.state === "OK") {
