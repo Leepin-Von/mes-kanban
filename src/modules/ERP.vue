@@ -24,6 +24,7 @@
 </template>
 
 <script>
+import { post } from "@/http/api";
 import CommonComponent from "@/components/CommonComponent.vue";
 // “小程序”导入
 import ResetUserPwd from "@/components/erp/ResetUserPwdComponent.vue";
@@ -50,7 +51,59 @@ export default {
      * @param component 每个“小程序”组件
      */
     handleComponentClick(component) {
-      this.$refs[component.name][0].openDialog();
+      if (component.componentId === "54006") {
+        return;
+      }
+      const parameters = {
+        username: localStorage.getItem("Username"),
+        password: "",
+        itemId: component.componentId,
+      };
+      post("/signIn", parameters)
+        .then((res) => {
+          if (res.code === 200) {
+            const auth = localStorage.getItem("Authorization");
+            if (auth) {
+              this.$refs[component.name][0].openDialog();
+            } else {
+              this.$confirm(
+                "检测到当前可能未登录，是否前往登录页面？",
+                "可能未登录",
+                {
+                  comfirmButtonText: "前往登录",
+                  cancelButtonText: "我就不",
+                }
+              )
+                .then(() => {
+                  localStorage.removeItem("Username");
+                  localStorage.removeItem("Authorization");
+                  this.$router.push("/signIn");
+                })
+                .catch(() => {
+                  localStorage.removeItem("Username");
+                  this.$alert("由不得你，去登录一下吧", "用户疑似抗拒登录", {
+                    confirmButtonText: "前往登录",
+                    callback: (action) => {
+                      if (action === "cancel") {
+                        this.$router.push("/signIn");
+                      }
+                    },
+                  });
+                });
+            }
+          } else {
+            this.$notify.error({
+              title: "出错",
+              message: `打开【${component.componentId} - ${component.componentName}】失败，无此权限`,
+            });
+          }
+        })
+        .catch((err) => {
+          this.$notify.error({
+            title: "出错",
+            message: `打开【${component.componentId} - ${component.componentName}】失败，可能的原因：${err}`,
+          });
+        });
     },
   },
 };
