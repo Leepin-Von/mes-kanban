@@ -27,18 +27,16 @@ export default {
           moduleName: "MES看板查询",
           url: "kanban",
         },
-        /* 2025-03-04 系统版本0.1.10 这两个暂时不更新
         {
           iconName: "#icon-jmreport",
-          moduleName: "报表设定",
+          moduleName: "报表设计",
           url: "jmreport",
         },
         {
           iconName: "#icon-jmreport",
-          moduleName: "大屏看板",
+          moduleName: "大屏设计",
           url: "drag",
         },
-        */
         {
           iconName: "#icon-erp",
           moduleName: "ERP",

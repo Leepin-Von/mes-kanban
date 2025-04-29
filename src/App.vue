@@ -22,7 +22,7 @@ export default {
       curVer: "",
       ver: PackageJson.version,
       updateMessage: `
-      新增：使用者密码重置与变更
+      新增：大屏设计与报表设计
       `,
     };
   },

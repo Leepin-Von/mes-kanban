@@ -62,7 +62,10 @@ router.beforeEach((to, from, next) => {
   }
   const token = localStorage.getItem("Authorization");
   const publicPages = ["/signIn"];
+  const adminOnlyRoutes = ["/home/jmreport", "/home/drag"];
   const authRequired = !publicPages.includes(to.path);
+  const adminRequired = adminOnlyRoutes.includes(to.path);
+  const isAdmin = localStorage.getItem("Username") === "ADMIN";
 
   if (authRequired && (!token || isTokenExpired(token))) {
     return next("/signIn");
@@ -72,6 +75,12 @@ router.beforeEach((to, from, next) => {
     } else {
       return next({ path: "/home" }); // 如果已经登录
     }
+  } else if (adminRequired && !isAdmin) {
+    Vue.prototype.$notify.error({
+      message: `员工【${localStorage.getItem("Username")}】无权限访问此页面，请联系管理员！`,
+      title: "警告",
+    });
+    return next("/home"); // 非ADMIN用户尝试访问管理员路由
   } else {
     return next();
   }
