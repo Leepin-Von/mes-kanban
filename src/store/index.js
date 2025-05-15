@@ -7,6 +7,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     Authorization: localStorage.getItem("Authorization") || "",
+    permitEmp: null,
   },
   getters: {},
   mutations: {
@@ -19,6 +20,9 @@ export default new Vuex.Store({
       state.Authorization = user.Authorization;
       localStorage.setItem("Authorization", user.Authorization);
     },
+    setPermitEmp(state, emp) {
+      state.permitEmp = emp;
+    }
   },
   actions: {},
   modules: {

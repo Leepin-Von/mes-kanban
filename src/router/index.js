@@ -47,6 +47,21 @@ const routes = [
     name: "upload",
     component: () => import("../views/UploadTestView.vue"),
   },
+  {
+    path: "/approval_helper",
+    name: "approvalHelper",
+    component: () => import("../components/erp/ToApprovalCenterTestComponent.vue"),
+  },
+  {
+    path: "/approval/:paperNo",
+    name: "approval",
+    component: () => import("../views/ApprovalCenterView.vue"),
+  },
+  {
+    path: "/vform_designer",
+    name: "vfromDesigner",
+    component: () => import("../views/VFormDesignView.vue"),
+  }
 ];
 
 const router = new VueRouter({
@@ -63,7 +78,7 @@ router.beforeEach((to, from, next) => {
   const token = localStorage.getItem("Authorization");
   const publicPages = ["/signIn"];
   const adminOnlyRoutes = ["/home/jmreport", "/home/drag"];
-  const authRequired = !publicPages.includes(to.path);
+  const authRequired = !publicPages.includes(to.path) && !to.path.startsWith("/approval/");
   const adminRequired = adminOnlyRoutes.includes(to.path);
   const isAdmin = localStorage.getItem("Username") === "ADMIN";
 
@@ -71,16 +86,16 @@ router.beforeEach((to, from, next) => {
     return next("/signIn");
   } else if (to.path === "/signIn" && token) {
     if (to.query.redirect) {
-      return next(to.query.redirect); // 重定向到原始页面
+      return next(to.query.redirect);
     } else {
-      return next({ path: "/home" }); // 如果已经登录
+      return next({ path: "/home" });
     }
   } else if (adminRequired && !isAdmin) {
     Vue.prototype.$notify.error({
       message: `员工【${localStorage.getItem("Username")}】无权限访问此页面，请联系管理员！`,
       title: "警告",
     });
-    return next("/home"); // 非ADMIN用户尝试访问管理员路由
+    return next("/home");
   } else {
     return next();
   }

@@ -15,7 +15,7 @@ export default {
   data() {
     return {
       iframeSrc:
-        "http://10.2.85.19:8528/jmreport/list?token=" +
+        "http://10.2.1.253:8528/jmreport/list?token=" +
         localStorage.getItem("Authorization"),
     };
   },

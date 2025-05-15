@@ -86,9 +86,9 @@ export default {
             this.userToken = res.data;
             this.changeLogin({ Authorization: this.userToken });
             localStorage.setItem("Username", this.loginForm.username);
-            if (this.$router.currentRoute.path !== "/home") {
-              this.$router.push("/home");
-            }
+            const redirectPath =
+              this.$router.currentRoute.query.redirect || "/home";
+            this.$router.push(redirectPath);
           } else {
             this.$notify.error({
               title: "登录失败",
