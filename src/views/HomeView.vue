@@ -1,53 +1,22 @@
 <template>
   <div class="home">
-    <div
-      v-if="
-        this.$router.currentRoute.path !== '/home/jmreport' &&
-        this.$router.currentRoute.path !== '/home/drag'
-      "
-      class="navbar"
-    >
-      <svg
-        class="icon-search"
-        aria-hidden="true"
-        v-show="this.$router.currentRoute.path !== '/home'"
-      >
+    <div v-if="isNavBarShow" class="navbar">
+      <svg class="icon-search" aria-hidden="true" v-show="isToolTipShow">
         <use xlink:href="#icon-search"></use>
       </svg>
-      <el-tooltip
-        class="item"
-        effect="dark"
-        content="输入 功能代码 或 功能名称 后回车，即可查询"
-        placement="bottom"
-        v-show="this.$router.currentRoute.path !== '/home'"
-      >
-        <input
-          type="text"
-          class="input-search"
-          v-model="searchValue"
-          placeholder="输入 功能代码 或 功能名称"
-          @keyup.enter="searchComponents"
-        />
+      <el-tooltip class="item" effect="dark" content="输入 功能代码 或 功能名称 后回车，即可查询" placement="bottom"
+        v-show="isToolTipShow">
+        <input type="text" class="input-search" v-model="searchValue" placeholder="输入 功能代码 或 功能名称"
+          @keyup.enter="searchComponents" />
       </el-tooltip>
-      <el-tooltip
-        class="item"
-        effect="dark"
-        content="刷新"
-        placement="bottom"
-        v-show="this.$router.currentRoute.path !== '/home'"
-      >
+      <el-tooltip class="item" effect="dark" content="刷新" placement="bottom" v-show="isToolTipShow">
         <div id="refresh" @click="refresh">
           <svg class="icon-refresh" aria-hidden="true">
             <use xlink:href="#icon-refresh"></use>
           </svg>
         </div>
       </el-tooltip>
-      <el-tooltip
-        class="item"
-        effect="dark"
-        :content="toolTipContent"
-        placement="bottom"
-      >
+      <el-tooltip class="item" effect="dark" :content="toolTipContent" placement="bottom">
         <div id="avatar" @click="handleAvatarClick">
           <svg class="icon-signOut" aria-hidden="true">
             <use xlink:href="#icon-signOut"></use>
@@ -55,13 +24,8 @@
         </div>
       </el-tooltip>
     </div>
-    <br
-      v-if="
-        this.$router.currentRoute.path !== '/home/jmreport' &&
-        this.$router.currentRoute.path !== '/home/drag'
-      "
-    />
-    <modules-view v-if="this.$router.currentRoute.path === '/home'" />
+    <br v-if="isNavBarShow" />
+    <modules-view v-show="isModulesShow" />
     <router-view />
   </div>
 </template>
@@ -91,6 +55,17 @@ export default {
       "erpComponents",
       "erpFilteredComponents",
     ]),
+    isNavBarShow() {
+      return this.$route.path !== "/home/jmreport"
+        && this.$route.path !== "/home/drag"
+        && this.$route.path !== "/home/vform_designer";
+    },
+    isToolTipShow() {
+      return this.$route.path !== "/home";
+    },
+    isModulesShow() {
+      return this.$route.path === "/home";
+    },
   },
   methods: {
     ...mapActions("components", ["filterComponents"]),

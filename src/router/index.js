@@ -35,6 +35,11 @@ const routes = [
         name: "erp",
         component: () => import("../modules/ERP.vue"),
       },
+      {
+        path: "vform_designer",
+        name: "vFromDesigner",
+        component: () => import("../modules/VFormDesigner.vue"),
+      },
     ],
   },
   {
@@ -48,20 +53,10 @@ const routes = [
     component: () => import("../views/UploadTestView.vue"),
   },
   {
-    path: "/approval_helper",
-    name: "approvalHelper",
-    component: () => import("../components/erp/ToApprovalCenterTestComponent.vue"),
-  },
-  {
     path: "/approval/:paperNo",
     name: "approval",
     component: () => import("../views/ApprovalCenterView.vue"),
   },
-  {
-    path: "/vform_designer",
-    name: "vfromDesigner",
-    component: () => import("../views/VFormDesignView.vue"),
-  }
 ];
 
 const router = new VueRouter({
@@ -77,7 +72,7 @@ router.beforeEach((to, from, next) => {
   }
   const token = localStorage.getItem("Authorization");
   const publicPages = ["/signIn"];
-  const adminOnlyRoutes = ["/home/jmreport", "/home/drag"];
+  const adminOnlyRoutes = ["/home/jmreport", "/home/drag", "/home/vform_designer"];
   const authRequired = !publicPages.includes(to.path) && !to.path.startsWith("/approval/");
   const adminRequired = adminOnlyRoutes.includes(to.path);
   const isAdmin = localStorage.getItem("Username") === "ADMIN";

@@ -1,8 +1,28 @@
 const { defineConfig } = require("@vue/cli-service");
+const TerserPlugin = require("terser-webpack-plugin");
+const WebpackObfuscator = require("webpack-obfuscator");
 
 module.exports = defineConfig({
   transpileDependencies: true,
-  productionSourceMap: false, // 隐藏源码
+  productionSourceMap: false,
+  configureWebpack: (config) => {
+    if (process.env.NODE_ENV === "production") {
+      // 代码加密
+      config.plugins.push(
+        new WebpackObfuscator({
+          rotateUnicodeArray: true,
+        })
+      );
+      // 代码混淆
+      config.optimization.minimizer.push(
+        new TerserPlugin({
+          terserOptions: {
+            mangle: true,
+          },
+        })
+      );
+    }
+  },
   devServer: {
     port: 8527, // 端口号
     proxy: {

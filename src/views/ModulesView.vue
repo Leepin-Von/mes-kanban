@@ -41,7 +41,12 @@ export default {
           iconName: "#icon-erp",
           moduleName: "ERP",
           url: "erp",
-        }
+        },
+        {
+          iconName: "#icon-design",
+          moduleName: "表单设计",
+          url: "vform_designer"
+        },
       ],
     };
   },

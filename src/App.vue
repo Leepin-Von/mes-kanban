@@ -1,13 +1,7 @@
 <template>
   <div id="app" :data-version="ver">
     <router-view />
-    <p
-      v-show="
-        this.$router.currentRoute.path !== '/home/jmreport' &&
-        this.$router.currentRoute.path !== '/home/drag'
-      "
-      class="footer"
-    >
+    <p v-show="isFooterShow" class="footer">
       当前版本：{{ curVer }}
     </p>
   </div>
@@ -25,6 +19,13 @@ export default {
       新增：大屏设计与报表设计
       `,
     };
+  },
+  computed: {
+    isFooterShow() {
+      return this.$route.path !== "/home/jmreport"
+        && this.$route.path !== "/home/drag"
+        && this.$route.path !== "/home/vform_designer";
+    }
   },
   mounted() {
     this.checkVersion();

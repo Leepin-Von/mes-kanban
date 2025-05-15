@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "40670547",
+      "name": "表单设计",
+      "font_class": "design",
+      "unicode": "eac5",
+      "unicode_decimal": 60101
+    },
+    {
       "icon_id": "3956108",
       "name": "ERP",
       "font_class": "erp",
