@@ -92,21 +92,6 @@ export default {
         this.form.approvalStatus = newVal;
       }
     },
-    // isFold: {
-    //   handler(newVal) {
-    //     this.form.isFold = newVal;
-    //   }
-    // },
-    // date: {
-    //   handler(newVal) {
-    //     this.form.date = newVal;
-    //   }
-    // },
-    // remark: {
-    //   handler(newVal) {
-    //     this.form.remark = newVal;
-    //   }
-    // }
   },
   methods: {
     handleSubmit() {
