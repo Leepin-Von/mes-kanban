@@ -52,10 +52,15 @@ const routes = [
     name: "upload",
     component: () => import("../views/UploadTestView.vue"),
   },
+  // {
+  //   path: "/approval/:paperNo",
+  //   name: "approvalTest",
+  //   component: () => import("../views/ApprovalCenterTestView.vue"),
+  // },
   {
-    path: "/approval/:paperNo",
-    name: "approval",
-    component: () => import("../views/ApprovalCenterView.vue"),
+    path: "/approval/prptpre/:preNum",
+    name: "prptpre",
+    component: () => import("../views/approval/PRptPreView.vue"),
   },
 ];
 
