@@ -7,7 +7,11 @@
             <el-col :span="12">
               <el-form-item label="簽核">
                 <div class="radio-group">
-                  <el-radio-group v-model="form.approvalStatus" v-for="item in approvalStatusOption" :key="item.value">
+                  <el-radio-group
+                    v-model="form.approvalStatus"
+                    v-for="item in approvalStatusOption"
+                    :key="item.value"
+                  >
                     <el-radio style="margin-right: 20px" :label="item.label">{{
                       item.value
                     }}</el-radio>
@@ -29,21 +33,35 @@
             </el-col>
             <el-col :span="12">
               <el-form-item label="日期">
-                <el-date-picker v-model="form.date" type="date"></el-date-picker>
+                <el-date-picker
+                  v-model="form.date"
+                  type="date"
+                ></el-date-picker>
               </el-form-item>
             </el-col>
           </el-row>
         </el-col>
         <el-col :span="8">
           <el-form-item label="備註">
-            <el-input v-model="form.remark" type="textarea" :autosize="{ minRows: 4, maxRows: 6 }"></el-input>
+            <el-input
+              v-model="form.remark"
+              type="textarea"
+              :autosize="{ minRows: 4, maxRows: 6 }"
+            ></el-input>
           </el-form-item>
         </el-col>
         <el-col :span="4">
           <el-form-item>
-            <el-button type="primary" icon="el-icon-check" style="margin-bottom: 8px"
-              @click="handleSubmit">儲存</el-button>
-            <el-button icon="el-icon-close" @click="handleCancel">取消</el-button>
+            <el-button
+              type="primary"
+              icon="el-icon-check"
+              style="margin-bottom: 8px"
+              @click="handleSubmit"
+              >儲存</el-button
+            >
+            <el-button icon="el-icon-close" @click="handleCancel"
+              >取消</el-button
+            >
           </el-form-item>
         </el-col>
       </el-row>
@@ -87,25 +105,25 @@ export default {
   },
   watch: {
     status: {
-      imediate: true,
+      immediate: true,
       handler(newVal) {
         this.form.approvalStatus = newVal;
-      }
+      },
     },
   },
   methods: {
     handleSubmit() {
       this.$notify.success({
-        title: '成功',
-        message: '储存成功'
+        title: "成功",
+        message: "储存成功",
       });
     },
     handleCancel() {
       this.form.isFold = false;
       this.form.date = "";
       this.form.remark = "";
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -126,6 +144,14 @@ export default {
     border: 1px solid #cfcfcf;
     padding: 0 10px;
     border-radius: 4px;
+  }
+
+  .pagination-container {
+    // ::v-deep .el-pagination {
+    //   display: flex;
+    //   flex-direction: column;
+    //   align-items: center;
+    // }
   }
 }
 </style>

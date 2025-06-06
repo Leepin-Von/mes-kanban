@@ -78,7 +78,7 @@ router.beforeEach((to, from, next) => {
   const token = localStorage.getItem("Authorization");
   const publicPages = ["/signIn"];
   const adminOnlyRoutes = ["/home/jmreport", "/home/drag", "/home/vform_designer"];
-  const authRequired = !publicPages.includes(to.path) && !to.path.startsWith("/approval/");
+  const authRequired = !publicPages.includes(to.path) && !to.path.startsWith("/approval");
   const adminRequired = adminOnlyRoutes.includes(to.path);
   const isAdmin = localStorage.getItem("Username") === "ADMIN";
 
