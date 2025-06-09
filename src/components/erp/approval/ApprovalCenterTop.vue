@@ -133,6 +133,11 @@ export default {
   padding-bottom: 0px;
 
   ::v-deep .el-form-item {
+    &__label {
+      font-weight: bold;
+      color: #9093a5;
+      font-size: 16px;
+    }
     &__content {
       display: flex;
       flex-direction: column;
@@ -144,14 +149,6 @@ export default {
     border: 1px solid #cfcfcf;
     padding: 0 10px;
     border-radius: 4px;
-  }
-
-  .pagination-container {
-    // ::v-deep .el-pagination {
-    //   display: flex;
-    //   flex-direction: column;
-    //   align-items: center;
-    // }
   }
 }
 </style>
