@@ -1,6 +1,6 @@
 <template>
   <div class="prptpre-container">
-    <approval-center-top :status="approvalStatus" />
+    <approval-center-top :is-confirm="approvalStatus" :paper-no="preNum" />
     <h1>{{ currentData.initialData.fullName }}</h1>
     <h2>請假單</h2>
     <hr />

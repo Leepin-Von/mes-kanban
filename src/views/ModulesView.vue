@@ -43,6 +43,11 @@ export default {
           url: "erp",
         },
         {
+          iconName: "#icon-jmreport",
+          moduleName: "ERP大屏显示",
+          url: "share",
+        },
+        {
           iconName: "#icon-design",
           moduleName: "表单设计",
           url: "vform_designer"

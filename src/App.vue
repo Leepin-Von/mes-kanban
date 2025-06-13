@@ -16,7 +16,8 @@ export default {
       curVer: "",
       ver: PackageJson.version,
       updateMessage: `
-      新增：大屏设计与报表设计
+      新增：签核中心Beta版
+      修复：顶部导航栏无法显示的问题
       `,
     };
   },
