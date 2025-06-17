@@ -10,7 +10,7 @@
         <el-col :span="12">
           <el-row>
             <el-col :span="12">
-              <el-form-item label="簽核">
+              <el-form-item label="簽核" prop="isConfirm">
                 <div class="radio-group">
                   <el-radio-group
                     v-model="form.isConfirm"
@@ -40,14 +40,16 @@
               <el-form-item label="日期">
                 <el-date-picker
                   v-model="form.confirmDate"
-                  type="date"
+                  type="datetime"
+                  format="MM/dd/yyyy HH:mm"
+                  value-format="yyyy-MM-dd HH:mm:ss.SSS"
                 ></el-date-picker>
               </el-form-item>
             </el-col>
           </el-row>
         </el-col>
         <el-col :span="8">
-          <el-form-item label="備註">
+          <el-form-item label="備註" prop="comment">
             <el-input
               v-model="form.comment"
               type="textarea"
@@ -77,7 +79,9 @@
 </template>
 
 <script>
-import { post } from '@/http/api';
+import { post } from "@/http/api";
+import moment from "moment";
+
 export default {
   props: {
     isConfirm: {
@@ -90,14 +94,14 @@ export default {
     },
   },
   data() {
-    let chkStatus = (rule, value, callback) => {
+    const chkStatus = (rule, value, callback) => {
       if (value === 0) {
         callback(new Error("请选择[核可]或[退審]"));
       } else {
         callback();
       }
     };
-    let chkComment = (rule, value, callback) => {
+    const chkComment = (rule, value, callback) => {
       if (value === "" && this.form.isConfirm === 2) {
         callback(new Error("請簡單敘述退審的原因！"));
       } else {
@@ -128,7 +132,7 @@ export default {
       },
       labelWidth: "120px",
       rules: {
-        isConfirm: [{ validator: chkStatus, trigger: "blur" }],
+        isConfirm: [{ validator: chkStatus, trigger: "change" }],
         comment: [
           { max: 50, message: "不能超过50个字符", trigger: "blur" },
           { validator: chkComment, trigger: "blur" },
@@ -137,10 +141,18 @@ export default {
     };
   },
   watch: {
+    "form.isConfirm": function (newVal) {
+      this.$emit("update:is-confirm", newVal);
+    },
     isConfirm: {
       immediate: true,
-      handler(newVal) {
+      handler(newVal, oldVal) {
         this.form.isConfirm = newVal;
+        if (oldVal === 0 && (newVal === 1 || newVal === 2)) {
+          this.form.confirmDate = moment()
+            .utcOffset(8)
+            .format("YYYY-MM-DD HH:mm:ss.SSS");
+        }
       },
     },
   },
@@ -155,40 +167,42 @@ export default {
           confirmDate: _this.form.confirmDate,
           comment: _this.form.comment,
         },
-      }
-      post("/approval/runFlow", params).then(res => {
-        if (res.code === 200) {
-          if (params.topForm.isConfirm === 1) {
-            this.$notify.success({
+      };
+      post("/approval/runFlow", params)
+        .then((res) => {
+          if (res.code === 200) {
+            if (params.topForm.isConfirm === 1) {
+              this.$notify.success({
+                title: "提示",
+                message: "签核完成",
+              });
+            } else if (params.topForm.isConfirm === 2) {
+              this.$notify.success({
+                title: "提示",
+                message: "退审完成",
+              });
+            }
+          } else {
+            this.$notify.error({
               title: "提示",
-              message: "簽核完成"
-            });
-          } else if (params.topForm.isConfirm === 2) {
-            this.$notify.success({
-              title: "提示",
-              message: "退審完成"
+              message: res.message,
             });
           }
-        } else {
+        })
+        .catch((err) => {
           this.$notify.error({
             title: "提示",
-            message: res.message
+            message: err,
           });
-        }
-      }).catch(err => {
-        this.$notify.error({
-          title: "提示",
-          message: err
         });
-      })
     },
     handleSubmit(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           // TODO 校验通过
           if (this.form.isConfirm === 2) {
-            this.$confirm("確定要退審此張單據嗎？", "提示", {
-              confirmButtonText: "確定",
+            this.$confirm("确定要退审此张单据吗？", "提示", {
+              confirmButtonText: "确定",
               cancelButtonText: "取消",
               type: "warning",
             })
@@ -207,9 +221,9 @@ export default {
         } else {
           // TODO 校验不通过
           this.$notify.error({
-            title: "錯誤",
-            message: "請檢查填寫是否正確！",
-          })
+            title: "错误",
+            message: "请检查填写是否正确！",
+          });
         }
       });
     },

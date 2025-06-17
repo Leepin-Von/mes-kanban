@@ -1,6 +1,6 @@
 <template>
   <div class="prptpre-container">
-    <approval-center-top :is-confirm="approvalStatus" :paper-no="preNum" />
+    <approval-center-top :is-confirm.sync="approvalStatus" :paper-no="preNum" />
     <h1>{{ currentData.initialData.fullName }}</h1>
     <h2>請假單</h2>
     <hr />
@@ -124,7 +124,11 @@ export default {
       approvalStatus: 0,
       currentPage: 1,
       pages: [],
-      currentData: {},
+      currentData: {
+        pageNo: 1,
+        initialData: {},
+        tableData: {},
+      },
       total: 0,
       preNum: this.$route.params.preNum,
       tableColumns: {
