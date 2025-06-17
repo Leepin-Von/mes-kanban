@@ -31,6 +31,7 @@ import MRBGroupScrap from "@/components/kanban/MRBGroupScrape.vue";
 import MRBPartNumScrap from "@/components/kanban/MRBPartNumScrape.vue";
 import MRBPartNumList from "@/components/kanban/MRBPartNumList.vue";
 import MRBProdClass from "@/components/kanban/MRBProdClass.vue";
+import SectorOrgList from "@/components/kanban/SectorOrgList.vue";
 import { mapState } from "vuex";
 
 export default {
@@ -42,6 +43,7 @@ export default {
     MRBPartNumScrap,
     MRBPartNumList,
     MRBProdClass,
+    SectorOrgList,
   },
   computed: {
     ...mapState("components", ["kanbanFilteredComponents"]),

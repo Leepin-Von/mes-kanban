@@ -23,6 +23,11 @@ const state = {
       componentId: 54004,
       componentName: "MRB产品类别报废查询",
     },
+    {
+      name: "SectorOrgList",
+      componentId: 54007,
+      componentName: "人力成本管理查询",
+    },
   ],
   kanbanFilteredComponents: [],
   /**

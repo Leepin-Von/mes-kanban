@@ -93,6 +93,13 @@ export default {
       { SuperOrgId: superOrgId }
     );
   },
+  /**
+   * 获取部级单位列表（带缓存）
+   * @returns 返回部级单位列表数据
+   */
+  async getSectorOrgList() {
+    return this.getCachedData('SectorOrgList', 'SectorOrgList');
+  },
 
   // 清除所有缓存
   clearCache() {
