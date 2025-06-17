@@ -4,7 +4,6 @@ import axios from "axios";
  * 设置 axios 的默认基础 URL
  */
 axios.defaults.baseURL = "/api";
-window.axios = axios;
 
 /**
  * 请求拦截器
@@ -72,3 +71,5 @@ export async function postFile(url, param = {}) {
   });
   return res.data;
 }
+
+window.axios = axios;

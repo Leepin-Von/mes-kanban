@@ -21,6 +21,8 @@ module.exports = defineConfig({
           },
         })
       );
+      // 代码压缩
+      config.optimization.minimize = true;
     }
   },
   devServer: {

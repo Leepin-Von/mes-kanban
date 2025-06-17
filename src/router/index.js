@@ -40,7 +40,17 @@ const routes = [
         name: "vFromDesigner",
         component: () => import("../modules/VFormDesigner.vue"),
       },
+      {
+        path: "share",
+        name: "biShare",
+        component: () => import("@/modules/BiShare.vue"),
+      },
     ],
+  },
+  {
+    path: "/home/share/:pageName",
+    name: "sharedPage",
+    component: () => import("@/components/bi/DynamicPageLoader.vue"),
   },
   {
     path: "/editor",
@@ -52,10 +62,15 @@ const routes = [
     name: "upload",
     component: () => import("../views/UploadTestView.vue"),
   },
+  // {
+  //   path: "/approval/:paperNo",
+  //   name: "approvalTest",
+  //   component: () => import("../views/ApprovalCenterTestView.vue"),
+  // },
   {
-    path: "/approval/:paperNo",
-    name: "approval",
-    component: () => import("../views/ApprovalCenterView.vue"),
+    path: "/approval/prptpre/:preNum",
+    name: "prptpre",
+    component: () => import("../views/approval/PRptPreView.vue"),
   },
 ];
 
@@ -73,11 +88,13 @@ router.beforeEach((to, from, next) => {
   const token = localStorage.getItem("Authorization");
   const publicPages = ["/signIn"];
   const adminOnlyRoutes = ["/home/jmreport", "/home/drag", "/home/vform_designer"];
-  const authRequired = !publicPages.includes(to.path) && !to.path.startsWith("/approval/");
+  const authRequired = !publicPages.includes(to.path) /*&& !to.path.startsWith("/approval")*/;
   const adminRequired = adminOnlyRoutes.includes(to.path);
   const isAdmin = localStorage.getItem("Username") === "ADMIN";
 
   if (authRequired && (!token || isTokenExpired(token))) {
+    const preToPath = to.path;
+    localStorage.setItem("preToPath", preToPath);
     return next("/signIn");
   } else if (to.path === "/signIn" && token) {
     if (to.query.redirect) {

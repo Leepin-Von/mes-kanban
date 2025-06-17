@@ -56,9 +56,9 @@ export default {
       "erpFilteredComponents",
     ]),
     isNavBarShow() {
-      return this.$route.path !== "/home/jmreport"
-        && this.$route.path !== "/home/drag"
-        && this.$route.path !== "/home/vform_designer";
+      return !this.$route.path.startsWith("/home/jmreport")
+        || !this.$route.path.startsWith("/home/drag")
+        || !this.$route.path === "/home/vform_designer";
     },
     isToolTipShow() {
       return this.$route.path !== "/home";

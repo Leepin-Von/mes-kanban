@@ -86,8 +86,8 @@ export default {
             this.userToken = res.data;
             this.changeLogin({ Authorization: this.userToken });
             localStorage.setItem("Username", this.loginForm.username);
-            const redirectPath =
-              this.$router.currentRoute.query.redirect || "/home";
+            const redirectPath = localStorage.getItem("preToPath") || "/home";
+            localStorage.removeItem("preToPath");
             this.$router.push(redirectPath);
           } else {
             this.$notify.error({

@@ -46,6 +46,7 @@ const state = {
     },
   ],
   erpFilteredComponents: [],
+  
 };
 
 const mutations = {
@@ -65,6 +66,7 @@ const mutations = {
   SET_ERP_FILTERED_COMPONENTS(state, components) {
     state.erpFilteredComponents = components;
   },
+  
 };
 
 const actions = {
@@ -80,6 +82,7 @@ const actions = {
   initErpFilteredComponents({ commit, state }) {
     commit("SET_ERP_FILTERED_COMPONENTS", state.erpComponents);
   },
+  
   filterComponents({ commit, state }, { routePath, searchValue }) {
     if (routePath === "/home/erp") {
       const filtered = state.erpComponents.filter(
@@ -97,6 +100,7 @@ const actions = {
       );
       commit("SET_KANBAN_FILTERED_COMPONENTS", filtered.length ? filtered : state.kanbanComponents);
     }
+    
   },
 };
 
