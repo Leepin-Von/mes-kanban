@@ -125,7 +125,7 @@ export default {
       currentPage: 1,
       pages: [],
       currentData: {
-        pageNo: 1,
+        pageNo: 0,
         initialData: {},
         tableData: {},
       },
@@ -192,7 +192,7 @@ export default {
         currentPage > this.currentPage ? "slide-left" : "slide-right";
       this.currentPage = currentPage;
       this.currentData = this.pages[currentPage - 1];
-      this.approvalStatus = this.currentData.initialData.status;
+      this.approvalStatus = this.currentData.initialData.status === 1 ? 0 : this.currentData.initialData.status;
     },
     getInitialData() {
       const params = {
@@ -293,7 +293,7 @@ export default {
               });
             });
             this.currentData = this.pages[0];
-            this.approvalStatus = this.currentData.initialData.status;
+            this.approvalStatus = this.currentData.initialData.status === 1 ? 0 : this.currentData.initialData.status;
           } else {
             this.$notify.error({
               title: "初始化错误",

@@ -37,7 +37,7 @@
               </el-form-item>
             </el-col>
             <el-col :span="12">
-              <el-form-item label="日期">
+              <el-form-item label="日期" prop="confirmDate">
                 <el-date-picker
                   v-model="form.confirmDate"
                   type="datetime"
@@ -63,12 +63,10 @@
               type="primary"
               icon="el-icon-check"
               style="margin-bottom: 8px"
-              @click="handleSubmit('approvalStatusForm')"
+              @click="handleSubmit"
               >儲存</el-button
             >
-            <el-button
-              icon="el-icon-close"
-              @click="handleCancel('approvalStatusForm')"
+            <el-button icon="el-icon-close" @click="handleCancel"
               >取消</el-button
             >
           </el-form-item>
@@ -127,15 +125,23 @@ export default {
         isConfirm: 0,
         isFold: false,
         confirmEmpId: localStorage.getItem("Username"),
-        confirmDate: "",
+        confirmDate: null,
         comment: "",
       },
       labelWidth: "120px",
       rules: {
-        isConfirm: [{ validator: chkStatus, trigger: "change" }],
+        isConfirm: [
+          {
+            validator: chkStatus,
+            trigger: "change",
+          },
+        ],
         comment: [
           { max: 50, message: "不能超过50个字符", trigger: "blur" },
-          { validator: chkComment, trigger: "blur" },
+          {
+            validator: chkComment,
+            trigger: "blur",
+          },
         ],
       },
     };
@@ -149,34 +155,34 @@ export default {
       handler(newVal, oldVal) {
         this.form.isConfirm = newVal;
         if (oldVal === 0 && (newVal === 1 || newVal === 2)) {
-          this.form.confirmDate = moment()
-            .utcOffset(8)
-            .format("YYYY-MM-DD HH:mm:ss.SSS");
+          this.form.confirmDate = moment().utcOffset(8).format("YYYY-MM-DD HH:mm:ss.SSS");
         }
       },
+    },
+    "form.isConfirm": function (newVal) {
+      this.$emit("update:is-confirm", newVal);
     },
   },
   methods: {
     runFlow() {
-      const _this = this;
       const params = {
-        paperNo: _this.paperNo,
-        topForm: {
-          isConfirm: _this.form.isConfirm,
-          confirmEmpId: _this.form.confirmEmpId,
-          confirmDate: _this.form.confirmDate,
-          comment: _this.form.comment,
+        paperNo: this.paperNo,
+        top: {
+          isConfirm: this.form.isConfirm,
+          confirmEmpId: this.form.confirmEmpId,
+          confirmDate: this.form.confirmDate,
+          comment: this.form.comment,
         },
       };
       post("/approval/runFlow", params)
         .then((res) => {
           if (res.code === 200) {
-            if (params.topForm.isConfirm === 1) {
+            if (params.top.isConfirm === 1) {
               this.$notify.success({
                 title: "提示",
                 message: "签核完成",
               });
-            } else if (params.topForm.isConfirm === 2) {
+            } else if (params.top.isConfirm === 2) {
               this.$notify.success({
                 title: "提示",
                 message: "退审完成",
@@ -196,8 +202,8 @@ export default {
           });
         });
     },
-    handleSubmit(formName) {
-      this.$refs[formName].validate((valid) => {
+    handleSubmit() {
+      this.$refs.approvalStatusForm.validate((valid) => {
         if (valid) {
           // TODO 校验通过
           if (this.form.isConfirm === 2) {
@@ -224,14 +230,15 @@ export default {
             title: "错误",
             message: "请检查填写是否正确！",
           });
+          return false;
         }
       });
     },
-    handleCancel(formName) {
+    handleCancel() {
       this.form.isFold = false;
-      this.form.date = "";
-      this.form.remark = "";
-      this.$refs[formName].resetFields();
+      this.form.confirmDate = "";
+      this.form.comment = "";
+      this.$refs.approvalStatusForm.resetFields();
     },
   },
 };
