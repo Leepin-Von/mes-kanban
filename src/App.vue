@@ -1,9 +1,7 @@
 <template>
   <div id="app" :data-version="ver">
     <router-view />
-    <p v-show="isFooterShow" class="footer">
-      当前版本：{{ curVer }}
-    </p>
+    <div v-show="isFooterShow" class="footer">当前版本：{{ curVer }}</div>
   </div>
 </template>
 
@@ -23,10 +21,10 @@ export default {
   },
   computed: {
     isFooterShow() {
-      return this.$route.path !== "/home/jmreport"
-        && this.$route.path !== "/home/drag"
-        && this.$route.path !== "/home/vform_designer";
-    }
+      return !this.$route.path.startsWith("/home/jmreport")
+        || !this.$route.path.startsWith("/home/drag")
+        || !this.$route.path === "/home/vform_designer";
+    },
   },
   mounted() {
     this.checkVersion();
@@ -59,6 +57,9 @@ export default {
   -moz-osx-font-smoothing: grayscale;
 
   .footer {
+    background-color: #fff;
+    padding-top: 3px;
+    padding-bottom: 3px;
     font-family: "Courier New", Courier, monospace;
     width: 100%;
     text-align: center;
@@ -67,6 +68,7 @@ export default {
     color: #666;
     user-select: none;
     font-size: calc(0.5rem + 0.5vw);
+    z-index: 100;
   }
 }
 

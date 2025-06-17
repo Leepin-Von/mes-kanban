@@ -57,8 +57,8 @@ export default {
     ]),
     isNavBarShow() {
       return !this.$route.path.startsWith("/home/jmreport")
-        && !this.$route.path.startsWith("/home/drag")
-        && !this.$route.path !== "/home/vform_designer";
+        || !this.$route.path.startsWith("/home/drag")
+        || !this.$route.path === "/home/vform_designer";
     },
     isToolTipShow() {
       return this.$route.path !== "/home";
