@@ -147,9 +147,6 @@ export default {
     };
   },
   watch: {
-    "form.isConfirm": function (newVal) {
-      this.$emit("update:is-confirm", newVal);
-    },
     isConfirm: {
       immediate: true,
       handler(newVal, oldVal) {
