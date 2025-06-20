@@ -13,6 +13,7 @@
               <el-form-item label="簽核" prop="isConfirm">
                 <div class="radio-group">
                   <el-radio-group
+                    :disabled="readOnly"
                     v-model="form.isConfirm"
                     v-for="item in approvalStatusOption"
                     :key="item.value"
@@ -26,7 +27,7 @@
             </el-col>
             <el-col :span="12">
               <el-form-item>
-                <el-checkbox v-model="form.isFold">展開單據流程</el-checkbox>
+                <el-checkbox v-model="form.isFold" :disabled="readOnly">展開單據流程</el-checkbox>
               </el-form-item>
             </el-col>
           </el-row>
@@ -43,6 +44,7 @@
                   type="datetime"
                   format="MM/dd/yyyy HH:mm"
                   value-format="yyyy-MM-dd HH:mm:ss.SSS"
+                  :disabled="readOnly"
                 ></el-date-picker>
               </el-form-item>
             </el-col>
@@ -51,6 +53,7 @@
         <el-col :span="8">
           <el-form-item label="備註" prop="comment">
             <el-input
+              :readonly="readOnly"
               v-model="form.comment"
               type="textarea"
               :autosize="{ minRows: 4, maxRows: 6 }"
@@ -63,10 +66,11 @@
               type="primary"
               icon="el-icon-check"
               style="margin-bottom: 8px"
+              :disabled="readOnly"
               @click="handleSubmit"
               >儲存</el-button
             >
-            <el-button icon="el-icon-close" @click="handleCancel"
+            <el-button icon="el-icon-close" :disabled="readOnly" @click="handleCancel"
               >取消</el-button
             >
           </el-form-item>
@@ -144,6 +148,7 @@ export default {
           },
         ],
       },
+      readOnly: false,
     };
   },
   watch: {
@@ -179,11 +184,13 @@ export default {
                 title: "提示",
                 message: "签核完成",
               });
+              this.readOnly = true;
             } else if (params.top.isConfirm === 2) {
               this.$notify.success({
                 title: "提示",
                 message: "退审完成",
               });
+              this.readOnly = true;
             }
           } else {
             this.$notify.error({
