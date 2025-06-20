@@ -112,6 +112,7 @@
 import ApprovalCenterTop from "@/components/erp/approval/ApprovalCenterTop.vue";
 
 import { post } from "@/http/api";
+import { hasPermission } from "@/utils/Permission";
 import moment from "moment";
 
 export default {
@@ -182,8 +183,11 @@ export default {
   },
   computed: {},
   watch: {},
-  created() {
-    this.getInitialData();
+  async created() {
+    const chkAccess = await hasPermission(this.preNum);
+    if (chkAccess) {
+      this.getInitialData();
+    }
   },
   mounted() {},
   methods: {
@@ -192,7 +196,10 @@ export default {
         currentPage > this.currentPage ? "slide-left" : "slide-right";
       this.currentPage = currentPage;
       this.currentData = this.pages[currentPage - 1];
-      this.approvalStatus = this.currentData.initialData.status === 1 ? 0 : this.currentData.initialData.status;
+      this.approvalStatus =
+        this.currentData.initialData.status === 1
+          ? 0
+          : this.currentData.initialData.status;
     },
     getInitialData() {
       const params = {
@@ -293,7 +300,10 @@ export default {
               });
             });
             this.currentData = this.pages[0];
-            this.approvalStatus = this.currentData.initialData.status === 1 ? 0 : this.currentData.initialData.status;
+            this.approvalStatus =
+              this.currentData.initialData.status === 1
+                ? 0
+                : this.currentData.initialData.status;
           } else {
             this.$notify.error({
               title: "初始化错误",
