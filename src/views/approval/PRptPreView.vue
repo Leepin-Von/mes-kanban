@@ -1,6 +1,6 @@
 <template>
   <div class="prptpre-container">
-    <approval-center-top :is-confirm.sync="approvalStatus" :paper-no="preNum" />
+    <approval-center-top :is-confirm.sync="approvalStatus" :has-permission="canAccess" :paper-no="preNum" />
     <h1>{{ currentData.initialData.fullName }}</h1>
     <h2>請假單</h2>
     <hr />
@@ -123,6 +123,7 @@ export default {
   data() {
     return {
       approvalStatus: 0,
+      canAccess: true,
       currentPage: 1,
       pages: [],
       currentData: {
@@ -187,6 +188,8 @@ export default {
     const chkAccess = await hasPermission(this.preNum);
     if (chkAccess) {
       this.getInitialData();
+    } else {
+      this.canAccess = false;
     }
   },
   mounted() {},

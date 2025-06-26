@@ -1,6 +1,6 @@
 {
-  "name": "mes-kanban",
-  "version": "0.2.1",
+  "name": "it-srv-sys",
+  "version": "0.2.2",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -13,7 +13,7 @@
     "core-js": "^3.8.3",
     "element-ui": "^2.15.14",
     "jwt-decode": "^4.0.0",
-    "mes-kanban": "file:",
+    "it-srv-sys": "file:",
     "moment": "^2.30.1",
     "quill": "^2.0.0-dev.3",
     "quilljs-markdown": "^1.2.0",

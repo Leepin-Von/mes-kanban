@@ -13,7 +13,7 @@
               <el-form-item label="簽核" prop="isConfirm">
                 <div class="radio-group">
                   <el-radio-group
-                    :disabled="readOnly"
+                    :disabled="!canAccess"
                     v-model="form.isConfirm"
                     v-for="item in approvalStatusOption"
                     :key="item.value"
@@ -94,6 +94,10 @@ export default {
       type: String,
       required: true,
     },
+    canAccess: {
+      type: Boolean,
+      required: true,
+    }
   },
   data() {
     const chkStatus = (rule, value, callback) => {
