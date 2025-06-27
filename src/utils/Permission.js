@@ -8,7 +8,7 @@ export async function hasPermission(paperNo) {
       const permissionEmps = res.data;
       const currentUser = localStorage.getItem("Username");
 
-      if (Array.isArray(permissionEmps) && permissionEmps.includes(currentUser)) {
+      if (Array.isArray(permissionEmps) && (permissionEmps.includes(currentUser) || currentUser === "ADMIN")) {
         return true;
       } else {
         Vue.prototype.$notify.error({

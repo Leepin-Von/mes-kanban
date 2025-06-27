@@ -13,7 +13,7 @@
               <el-form-item label="簽核" prop="isConfirm">
                 <div class="radio-group">
                   <el-radio-group
-                    :disabled="!canAccess"
+                    :disabled="!hasPermission"
                     v-model="form.isConfirm"
                     v-for="item in approvalStatusOption"
                     :key="item.value"
@@ -27,7 +27,9 @@
             </el-col>
             <el-col :span="12">
               <el-form-item>
-                <el-checkbox v-model="form.isFold" :disabled="readOnly">展開單據流程</el-checkbox>
+                <el-checkbox v-model="form.isFold" :disabled="readOnly"
+                  >展開單據流程</el-checkbox
+                >
               </el-form-item>
             </el-col>
           </el-row>
@@ -70,7 +72,10 @@
               @click="handleSubmit"
               >儲存</el-button
             >
-            <el-button icon="el-icon-close" :disabled="readOnly" @click="handleCancel"
+            <el-button
+              icon="el-icon-close"
+              :disabled="readOnly"
+              @click="handleCancel"
               >取消</el-button
             >
           </el-form-item>
@@ -94,10 +99,10 @@ export default {
       type: String,
       required: true,
     },
-    canAccess: {
+    hasPermission: {
       type: Boolean,
       required: true,
-    }
+    },
   },
   data() {
     const chkStatus = (rule, value, callback) => {
@@ -161,7 +166,9 @@ export default {
       handler(newVal, oldVal) {
         this.form.isConfirm = newVal;
         if (oldVal === 0 && (newVal === 1 || newVal === 2)) {
-          this.form.confirmDate = moment().utcOffset(8).format("YYYY-MM-DD HH:mm:ss.SSS");
+          this.form.confirmDate = moment()
+            .utcOffset(8)
+            .format("YYYY-MM-DD HH:mm:ss.SSS");
         }
       },
     },
@@ -188,13 +195,11 @@ export default {
                 title: "提示",
                 message: "签核完成",
               });
-              this.readOnly = true;
             } else if (params.top.isConfirm === 2) {
               this.$notify.success({
                 title: "提示",
                 message: "退审完成",
               });
-              this.readOnly = true;
             }
           } else {
             this.$notify.error({

@@ -72,6 +72,11 @@ const routes = [
     name: "prptpre",
     component: () => import("../views/approval/PRptPreView.vue"),
   },
+  {
+    path: "/approval/sealApply/:paperNo",
+    name: "sealApply",
+    component: () => import("@/views/approval/SealApplyView.vue"),
+  }
 ];
 
 const router = new VueRouter({

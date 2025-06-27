@@ -113,6 +113,7 @@ import ApprovalCenterTop from "@/components/erp/approval/ApprovalCenterTop.vue";
 
 import { post } from "@/http/api";
 import { hasPermission } from "@/utils/Permission";
+import { formatSpecialDate, formatNumberToFloatFixed2 } from "@/utils/Format";
 import moment from "moment";
 
 export default {
@@ -177,7 +178,6 @@ export default {
           { prop: "bef_p9", label: "特休假" },
           { prop: "bef_p10", label: "加班互抵" },
         ],
-        currentPage: 1,
       },
       defaultTransition: "slide-left",
     };
@@ -210,6 +210,7 @@ export default {
         parameters: {
           PreNum: this.preNum,
         },
+        targetType: "PRptPre",
       };
       post("/approval", params)
         .then((res) => {
@@ -218,8 +219,8 @@ export default {
             res.data.forEach((item, index) => {
               item.preDate =
                 moment(new Date(item.preDate)).format("MM/DD/YYYY") || "";
-              item.fromTime = this.formatSpecialDate(item.fromTime);
-              item.toTime = this.formatSpecialDate(item.toTime);
+              item.fromTime = formatSpecialDate(item.fromTime);
+              item.toTime = formatSpecialDate(item.toTime);
               item.currDate = moment().format("MM/DD/YYYY");
               const tableData = {
                 table1: [
@@ -229,7 +230,7 @@ export default {
                     presentName: item.presentName,
                     fromTime: item.fromTime,
                     toTime: item.toTime,
-                    preHr: this.formatNumberToFloatFixed2(item.preHr),
+                    preHr: formatNumberToFloatFixed2(item.preHr),
                   },
                 ],
                 table2: [
@@ -242,22 +243,22 @@ export default {
                   {
                     text: "（不含本假單）",
                     activeDate: item.activeDate,
-                    canFree: this.formatNumberToFloatFixed2(item.canFree),
-                    p5: this.formatNumberToFloatFixed2(item.p5),
-                    p1: this.formatNumberToFloatFixed2(item.p1),
-                    p2: this.formatNumberToFloatFixed2(item.p2),
-                    p10: this.formatNumberToFloatFixed2(item.p10),
+                    canFree: formatNumberToFloatFixed2(item.canFree),
+                    p5: formatNumberToFloatFixed2(item.p5),
+                    p1: formatNumberToFloatFixed2(item.p1),
+                    p2: formatNumberToFloatFixed2(item.p2),
+                    p10: formatNumberToFloatFixed2(item.p10),
                   },
                 ],
                 table4: [
                   {
                     text: "（不含本假單）",
-                    p4: this.formatNumberToFloatFixed2(item.p4),
-                    p9: this.formatNumberToFloatFixed2(item.p9),
-                    p3: this.formatNumberToFloatFixed2(item.p3),
-                    p8: this.formatNumberToFloatFixed2(item.p8),
-                    p6: this.formatNumberToFloatFixed2(item.p6),
-                    p7: this.formatNumberToFloatFixed2(item.p7),
+                    p4: formatNumberToFloatFixed2(item.p4),
+                    p9: formatNumberToFloatFixed2(item.p9),
+                    p3: formatNumberToFloatFixed2(item.p3),
+                    p8: formatNumberToFloatFixed2(item.p8),
+                    p6: formatNumberToFloatFixed2(item.p6),
+                    p7: formatNumberToFloatFixed2(item.p7),
                   },
                 ],
                 table5: [
@@ -321,16 +322,8 @@ export default {
           });
         });
     },
-    formatSpecialDate(dateStr) {
-      return moment(new Date(dateStr.substring(0, dateStr.length - 1))).format(
-        "MM/DD/YYYY HH:mm:ss"
-      );
-    },
-    formatNumberToFloatFixed2(numStr) {
-      return parseFloat(numStr).toFixed(2);
-    },
     formatTable5(numStr) {
-      const num = this.formatNumberToFloatFixed2(numStr);
+      const num = formatNumberToFloatFixed2(numStr);
       return num === "0.00" ? "" : num;
     },
     cellClass({ rowIndex, columnIndex }) {
