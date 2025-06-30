@@ -5,6 +5,7 @@
       :has-permission="canAccess"
       :paper-no="paperNo"
     />
+    <p>如隔日單據未結案，相應責任單位主管請自行提懲處單！</p>
     <h1>{{ initialData.fullName }}</h1>
     <h2>工時調撥單</h2>
     <hr />
@@ -173,6 +174,12 @@ export default {
   padding-bottom: 45px;
   background: linear-gradient(#efefef, #ffffff);
   user-select: none;
+
+  p {
+    color: #FF461D;
+    font-weight: bold;
+    font-size: 0.9rem;
+  }
 
   h1 {
     margin-top: 0;
