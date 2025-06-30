@@ -42,8 +42,8 @@ export default {
       });
       post("/minio/remove", { url: url })
         .then((res) => {
-          if (res.code === 200 && res.map.removed === true) {
-            console.log(res.map.fileName);
+          if (res.code === 200 && res.extra.removed === true) {
+            console.log(res.extra.fileName);
             this.$notify.success({
               title: "删除成功",
               message: `【${file.name}】删除成功`,
@@ -105,11 +105,11 @@ export default {
       const _this = this;
       const formData = new FormData();
       formData.append("file", _this.file.raw);
-      formData.append("uploader", localStorage.getItem("Username"))
+      formData.append("uploader", localStorage.getItem("Username"));
       postFile("/minio/upload", formData)
         .then((res) => {
           if (res.code === 200) {
-            _this.file_list.push({ name: _this.file.name, url: res.map.url });
+            _this.file_list.push({ name: _this.file.name, url: res.extra.url });
             this.file_list = unique(_this.file_list);
             this.$notify.success({
               title: "上传成功",

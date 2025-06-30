@@ -1,6 +1,10 @@
 <template>
   <div class="prptpre-container">
-    <approval-center-top :is-confirm.sync="approvalStatus" :has-permission="canAccess" :paper-no="preNum" />
+    <approval-center-top
+      :is-confirm.sync="approvalStatus"
+      :has-permission="canAccess"
+      :paper-no="preNum"
+    />
     <h1>{{ currentData.initialData.fullName }}</h1>
     <h2>請假單</h2>
     <hr />
@@ -215,7 +219,7 @@ export default {
       post("/approval", params)
         .then((res) => {
           if (res.code === 200) {
-            this.total = res.map.total;
+            this.total = res.extra.total;
             res.data.forEach((item, index) => {
               item.preDate =
                 moment(new Date(item.preDate)).format("MM/DD/YYYY") || "";

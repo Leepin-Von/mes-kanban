@@ -5,7 +5,7 @@
       :has-permission="canAccess"
       :paper-no="paperNo"
     />
-    <h1>{{ currentData.initialData.fullName }}</h1>
+    <h1>{{ initialData.fullName }}</h1>
     <h2>印鑑申請單</h2>
     <br />
     <div class="rpt-top">
@@ -13,16 +13,18 @@
         <el-pagination
           background
           small
-          layout="prev, pager, next"
+          layout="sizes, prev, pager, next"
           :total="total"
           :hide-on-single-page="true"
+          :page-sizes="[1, 5, 10, 20]"
           :page-size="1"
           :current-page="currentPage"
           :pager-count="5"
+          @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
         />
-        <pre>編    號：{{ currentData.initialData.paperNo }}</pre>
-        <pre>申請日期：{{ currentData.initialData.paperDate }}</pre>
+        <pre>編    號：{{ initialData.paperNo }}</pre>
+        <pre>申請日期：{{ initialData.paperDate }}</pre>
       </div>
     </div>
     <br />
@@ -32,21 +34,21 @@
           <div class="rpt-comment">
             <span class="comment-title">申請單位：</span>
             <span>
-              {{ currentData.initialData.unitId }}
-              {{ currentData.initialData.unitName }}
+              {{ initialData.unitId }}
+              {{ initialData.unitName }}
             </span>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <span class="comment-title">申請人員：</span>
             <span>
-              {{ currentData.initialData.empId }}
-              {{ currentData.initialData.empName }}
+              {{ initialData.empId }}
+              {{ initialData.empName }}
             </span>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <span class="comment-title">會簽單位：</span>
-            <span>{{ currentData.initialData.flowRoute }}</span>
+            <span>{{ initialData.flowRoute }}</span>
           </div>
           <el-table
-            :data="currentData.tableData.table1"
+            :data="tableData.table1"
             border
             :header-cell-style="{ 'text-align': 'center' }"
             :cell-style="{ 'text-align': 'center' }"
@@ -60,7 +62,7 @@
             ></el-table-column>
           </el-table>
           <el-table
-            :data="currentData.tableData.table2"
+            :data="tableData.table2"
             border
             :header-cell-style="{ 'text-align': 'center' }"
             :cell-style="{ 'text-align': 'center' }"
@@ -74,7 +76,7 @@
             </el-table-column>
           </el-table>
           <el-table
-            :data="currentData.tableData.table3"
+            :data="tableData.table3"
             border
             :header-cell-style="{ 'text-align': 'center' }"
             :cell-style="{ 'text-align': 'center' }"
@@ -107,13 +109,37 @@ export default {
       approvalStatus: 0,
       canAccess: true,
       paperNo: this.$route.params.paperNo,
-      currentPage: 1,
-      pages: [],
-      currentData: {
-        pageNo: 0,
-        initialData: {},
-        tableData: [],
+      initialData: {},
+      tableData: {
+        table1: [
+          {
+            item: null,
+            document: null,
+            account: null,
+            government: null,
+            destineDate: null,
+            pattern: null,
+            page: null,
+            copy: null,
+            nothing: "",
+          },
+        ],
+        table2: [
+          {
+            lkIsLend: null,
+            date: null,
+            lkComfirmDate: null,
+            lkComment: null,
+          },
+        ],
+        table3: [
+          {
+            note: null,
+          },
+        ],
       },
+      pageSize: 1,
+      currentPage: 1,
       total: 0,
       defaultTransition: "slide-left",
       tableColumns: {
@@ -121,7 +147,7 @@ export default {
           { prop: "item", label: "序號", width: 50 },
           { prop: "document", label: "文件名稱", width: 250 },
           { prop: "account", label: "用途說明", width: 500 },
-          { prop: "government", label: "致單位", width: 150 },
+          { prop: "government", label: "致單位", width: 200 },
           { prop: "destineDate", label: "預定用章時間", width: 200 },
           { prop: "pattern", label: "式", width: 50 },
           { prop: "page", label: "聯", width: 50 },
@@ -147,14 +173,15 @@ export default {
     }
   },
   methods: {
+    handleSizeChange(pageSize) {
+      this.pageSize = pageSize;
+      this.getInitialData();
+    },
     handleCurrentChange(currentPage) {
       this.defaultTransition =
         currentPage > this.currentPage ? "slide-left" : "slide-right";
       this.currentPage = currentPage;
-      this.currentData = this.pages[currentPage - 1];
-      if (this.currentData.initialData.lkStastus === "送核") {
-        this.approvalStatus = 0;
-      }
+      this.getInitialData();
     },
     getInitialData() {
       const params = {
@@ -163,11 +190,14 @@ export default {
           paperNo: this.paperNo,
         },
         targetType: "SealApply",
+        pageNo: this.currentPage,
+        pageSize: this.pageSize,
       };
       post("/approval", params)
         .then((res) => {
           if (res.code === 200) {
-            res.data.forEach((item, index) => {
+            this.total = res.extra.total;
+            const tableData = res.data.map((item) => {
               item.paperDate = formatSpecialDate(item.paperDate);
               item.document = item.document + "（" + item.lkOrgCopy + "）";
               item.lkIsLend = item.lkIsLend === "x" ? "✘" : "✔";
@@ -179,7 +209,8 @@ export default {
                 item.date = `自 ${item.sDate} 至 ${item.eDate}`;
               }
               item.note = item.note.length === 0 ? "暂无数据" : item.note;
-              const tableData = {
+              this.initialData = item;
+              return {
                 table1: [
                   {
                     item: item.item,
@@ -207,14 +238,11 @@ export default {
                   },
                 ],
               };
-              this.pages.push({
-                pageNo: index + 1,
-                initialData: item,
-                tableData: tableData,
-              });
             });
-            this.currentData = this.pages[0];
-            if (this.currentData.initialData.lkStastus === "送核") {
+            this.tableData.table1 = tableData.map(item => item.table1[0]);
+            this.tableData.table2 = tableData[0].table2;
+            this.tableData.table3 = tableData[0].table3;
+            if (this.initialData.lkStastus === "送核") {
               this.approvalStatus = 0;
             }
           } else {
