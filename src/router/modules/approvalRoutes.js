@@ -14,4 +14,9 @@ export default [
     name: "subDemense",
     component: () => import("@/views/approval/SubDemenseView.vue"), // 原物料领料通知单
   },
+  {
+    path: "/approval/rptSupport/:paperNo",
+    name: "rptSupport",
+    component: () => import("@/views/approval/RptSupportView.vue"), // 工时调拨单
+  },
 ];
