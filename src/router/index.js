@@ -1,6 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import { jwtDecode } from "jwt-decode";
+import approvalRoutes from "./modules/approvalRoutes";
 
 Vue.use(VueRouter);
 
@@ -52,6 +53,7 @@ const routes = [
     name: "sharedPage",
     component: () => import("@/components/bi/DynamicPageLoader.vue"),
   },
+  ...approvalRoutes,
   {
     path: "/editor",
     name: "editor",
@@ -67,16 +69,6 @@ const routes = [
   //   name: "approvalTest",
   //   component: () => import("../views/ApprovalCenterTestView.vue"),
   // },
-  {
-    path: "/approval/prptpre/:preNum",
-    name: "prptpre",
-    component: () => import("../views/approval/PRptPreView.vue"),
-  },
-  {
-    path: "/approval/sealApply/:paperNo",
-    name: "sealApply",
-    component: () => import("@/views/approval/SealApplyView.vue"),
-  }
 ];
 
 const router = new VueRouter({

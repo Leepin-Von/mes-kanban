@@ -16,8 +16,8 @@
           layout="sizes, prev, pager, next"
           :total="total"
           :hide-on-single-page="true"
-          :page-sizes="[1, 5, 10, 20]"
-          :page-size="1"
+          :page-sizes="[5, 10, 15, 20]"
+          :page-size="pageSize"
           :current-page="currentPage"
           :pager-count="5"
           @size-change="handleSizeChange"
@@ -138,7 +138,7 @@ export default {
           },
         ],
       },
-      pageSize: 1,
+      pageSize: 5,
       currentPage: 1,
       total: 0,
       defaultTransition: "slide-left",
