@@ -128,7 +128,7 @@ export default {
   data() {
     return {
       approvalStatus: 0,
-      canAccess: true,
+      canAccess: false,
       currentPage: 1,
       pages: [],
       currentData: {
@@ -190,10 +190,9 @@ export default {
   watch: {},
   async created() {
     const chkAccess = await hasPermission(this.preNum);
+    this.canAccess = chkAccess;
     if (chkAccess) {
       this.getInitialData();
-    } else {
-      this.canAccess = false;
     }
   },
   mounted() {},
